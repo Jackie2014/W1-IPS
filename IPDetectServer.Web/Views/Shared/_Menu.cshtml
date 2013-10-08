@@ -1,0 +1,98 @@
+﻿@*@using Accela.Apps.Admin.Resources;
+@using Accela.Apps.Admin.Portal.Utility;
+@using Accela.Apps.Admin.Portal.Models;
+@{
+    var isAuthPassed = Request.IsAuthenticated;
+    var agencies = @AdminResources.GetString("Admin_Shared_Menu_Agencies");
+    var developers = @AdminResources.GetString("Admin_Shared_Menu_Developers");
+    var administrators = @AdminResources.GetString("Admin_Shared_Menu_Administrators");
+    var resources = @AdminResources.GetString("Admin_Shared_Menu_Resources");
+    var attachments = @AdminResources.GetString("Admin_Shared_Menu_Attachments");
+
+    var user = new Accela.Apps.Admin.Portal.Models.BaseModels.VMAdminBase();
+    var adminType = -1;
+    
+ }
+ @{
+     if (GlobalHelper.LoginAdministrator != null)
+     {
+         user = GlobalHelper.LoginAdministrator;
+         adminType = user.AdministratorType.Value;
+     }    
+}
+<script type="text/javascript">
+    $(function () {    
+        setCurrentMenu();
+        setMouseActionEeffect();
+    });
+
+    // Set mouseover and mouseut effect.
+    function setMouseActionEeffect() {              
+        $(".admin-module").each(function () {
+            $(this).bind({ mousemove: function () { setAllMenuUnSelected(); setMenuSelected(this); },
+                           mouseout: function () { setMenuUnSelected(this); setCurrentMenu(); } });
+        });        
+   }
+
+    // Set current menu.    
+   function setCurrentMenu() {
+       $(".admin-module").each(function () {
+           if ($(this).attr('name') == $('#hidCurrentMenu').val()) {
+
+               setMenuSelected(this);
+           }
+           else {
+               setMenuUnSelected(this);
+           }
+
+           // Hidden menu if authorization verify failed.
+           if ($(this).attr('requireauth') == 'true' && $("#hidAuthPassed").val() == 'False') {
+               $(this).parent().hide();
+           }
+       });
+    }      
+
+    // Set menu selected.
+    function setMenuSelected(menu) {        
+        $(menu).css("background-image", 'url(@Url.Content(PathHelper.GetAdministratorRootPath() + "/Content/themes/default/images/dev_menu_bar_selected.png"))');
+    }
+
+    // Set menu unselected.
+    function setMenuUnSelected(menu) {        
+        $(menu).css("background-image", 'url(@Url.Content(PathHelper.GetAdministratorRootPath() + "/Content/themes/default/images/dev_menu_bar.png"))');
+    }
+    // Set all menu unselected
+    function setAllMenuUnSelected() {
+        $(".admin-module").each(function () {
+            setMenuUnSelected(this);
+        });
+    }
+</script>
+
+@Html.Hidden("hidCurrentMenu", @ViewBag.MenuName as string)
+@Html.Hidden("hidAuthPassed", @isAuthPassed)
+@Html.Hidden("hidControllerName", "")
+<ul>
+    <li>
+        <a href='@Url.Action("Index", "AgencyList")' class="admin-module" name="Agencies" requireauth="false">@agencies</a>
+    </li>
+    @if (@user.AdministratorId == Guid.Empty || (@user != null && @adminType == (int)Enums.AdminType.CloudAdmin))
+    {
+    <li>
+        <a href='@Url.Action("Index", "DeveloperList")' class="admin-module" name="Developers" requireauth="false">@developers</a>
+    </li>
+    }
+    <li>
+        <a href='@Url.Action("Index", "AdminManageList", new {id=""})' class="admin-module" name="Administrators" requireauth="false">@administrators</a>
+    </li>    
+    <li>
+        <a href='@Url.Action("Index", "Resource")' class="admin-module" name="Resources" requireauth="false">@resources</a>
+    </li>
+    @if (@user.AdministratorId == Guid.Empty || (@user != null && @adminType == (int)Enums.AdminType.CloudAdmin))
+    {
+    <li>
+        <a href='@Url.Action("List", "Attachment")' class="admin-module" name="Attachments" requireauth="false">@attachments</a>
+    </li>
+    }
+</ul>
+*@

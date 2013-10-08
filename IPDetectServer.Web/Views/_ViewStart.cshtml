@@ -1,0 +1,12 @@
+﻿@{
+
+    var controllName = ViewContext.RouteData.Values["Controller"].ToString();
+    var actionName = ViewContext.RouteData.Values["Action"].ToString();
+    if ("Home".Equals(controllName, StringComparison.OrdinalIgnoreCase) && "Index".Equals(actionName, StringComparison.OrdinalIgnoreCase))
+    {
+        Layout = "~/Views/Shared/_LoginLayout.cshtml";
+    }
+    else{
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}

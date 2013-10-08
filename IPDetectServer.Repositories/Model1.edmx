@@ -1,0 +1,419 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="IPDetectServer.Repositories.dbModels.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.1" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="IPDetectServerRepositoriesdbModelsStoreContainer">
+          <EntitySet Name="clientips" EntityType="IPDetectServer.Repositories.dbModels.Store.clientips" store:Type="Tables" Schema="ipmonitordb" />
+          <EntitySet Name="ipdatabase" EntityType="IPDetectServer.Repositories.dbModels.Store.ipdatabase" store:Type="Tables" Schema="ipmonitordb" />
+          <EntitySet Name="loginrecords" EntityType="IPDetectServer.Repositories.dbModels.Store.loginrecords" store:Type="Tables" Schema="ipmonitordb" />
+          <EntitySet Name="routedatas" EntityType="IPDetectServer.Repositories.dbModels.Store.routedatas" store:Type="Tables" Schema="ipmonitordb" />
+          <EntitySet Name="serversettings" EntityType="IPDetectServer.Repositories.dbModels.Store.serversettings" store:Type="Tables" Schema="ipmonitordb" />
+          <EntitySet Name="tokens" EntityType="IPDetectServer.Repositories.dbModels.Store.tokens" store:Type="Tables" Schema="ipmonitordb" />
+          <EntitySet Name="users" EntityType="IPDetectServer.Repositories.dbModels.Store.users" store:Type="Tables" Schema="ipmonitordb" />
+        </EntityContainer>
+        <EntityType Name="clientips">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ClientPublicIP" Type="varchar" MaxLength="45" />
+          <Property Name="ClientPrivateIP" Type="varchar" MaxLength="45" />
+          <Property Name="SubmitFromServerIP" Type="varchar" MaxLength="45" />
+          <Property Name="ClientProvince" Type="varchar" MaxLength="45" />
+          <Property Name="ClientCity" Type="varchar" MaxLength="45" />
+          <Property Name="ClientDistinct" Type="varchar" MaxLength="10" />
+          <Property Name="ClientDetailAddr" Type="varchar" MaxLength="100" />
+          <Property Name="ExpectedOperatorProvince" Type="varchar" MaxLength="45" />
+          <Property Name="ExpectedOperatorCity" Type="varchar" MaxLength="45" />
+          <Property Name="ExpectedOperator" Type="varchar" MaxLength="45" />
+          <Property Name="RealOperatorProvince" Type="varchar" MaxLength="45" />
+          <Property Name="RealOperatorCity" Type="varchar" MaxLength="45" />
+          <Property Name="RealOperator" Type="varchar" MaxLength="45" />
+          <Property Name="Status" Type="uint" />
+          <Property Name="UserName" Type="varchar" MaxLength="100" />
+          <Property Name="ClientRecordor" Type="varchar" MaxLength="45" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ipdatabase">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="IPStart" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="IPEnd" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="Country" Type="varchar" MaxLength="45" />
+          <Property Name="Province" Type="varchar" MaxLength="45" />
+          <Property Name="City" Type="varchar" MaxLength="45" />
+          <Property Name="IPBelongTo" Type="varchar" MaxLength="100" />
+          <Property Name="IPStartNum" Type="bigint" />
+          <Property Name="IPEndNum" Type="bigint" />
+        </EntityType>
+        <EntityType Name="loginrecords">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="varchar" MaxLength="45" />
+          <Property Name="LoginDate" Type="datetime" />
+          <Property Name="LoginIP" Type="varchar" MaxLength="30" />
+          <Property Name="IsLoginFromClient" Type="uint" />
+        </EntityType>
+        <EntityType Name="routedatas">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="GroupID" Type="int" Nullable="false" />
+          <Property Name="SeqNoInGroup" Type="int" />
+          <Property Name="T1" Type="varchar" MaxLength="45" />
+          <Property Name="T2" Type="varchar" MaxLength="45" />
+          <Property Name="T3" Type="varchar" MaxLength="45" />
+          <Property Name="RouteIP" Type="varchar" MaxLength="45" />
+          <Property Name="IPBelongTo" Type="varchar" MaxLength="100" />
+          <Property Name="IPBelongToProvince" Type="varchar" MaxLength="45" />
+          <Property Name="IPBelongToCity" Type="varchar" MaxLength="45" />
+          <Property Name="RouteDate" Type="datetime" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="45" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="serversettings">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ServerName" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="ServerType" Type="int" Nullable="false" />
+          <Property Name="DNS" Type="varchar" MaxLength="100" />
+          <Property Name="IP" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="HostLocation" Type="varchar" MaxLength="200" />
+          <Property Name="IsDeleted" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="100" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tokens">
+          <Key>
+            <PropertyRef Name="Token" />
+          </Key>
+          <Property Name="Token" Type="varchar" Nullable="false" MaxLength="36" />
+          <Property Name="UserName" Type="varchar" MaxLength="100" />
+          <Property Name="IP" Type="varchar" MaxLength="20" />
+          <Property Name="MacAddr" Type="varchar" MaxLength="45" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ExpiredDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserType" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="Password" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="FullName" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="Phone" Type="varchar" MaxLength="100" />
+          <Property Name="Province" Type="varchar" MaxLength="20" />
+          <Property Name="City" Type="varchar" MaxLength="20" />
+          <Property Name="Address" Type="varchar" MaxLength="200" />
+          <Property Name="Description" Type="varchar" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="100" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="varchar" MaxLength="100" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="IPDetectServer.Repositories.dbModels" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="DataEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="IPEntities" EntityType="IPDetectServer.Repositories.dbModels.IPEntity" />
+          <EntitySet Name="LoginRecords" EntityType="IPDetectServer.Repositories.dbModels.LoginRecord" />
+          <EntitySet Name="ServerSettings" EntityType="IPDetectServer.Repositories.dbModels.ServerSetting" />
+          <EntitySet Name="Tokens" EntityType="IPDetectServer.Repositories.dbModels.token" />
+          <EntitySet Name="RouteDatas" EntityType="IPDetectServer.Repositories.dbModels.RouteData" />
+          <EntitySet Name="Users" EntityType="IPDetectServer.Repositories.dbModels.User" />
+          <EntitySet Name="ClientIPs" EntityType="IPDetectServer.Repositories.dbModels.ClientIP" />
+        </EntityContainer>
+        <EntityType Name="IPEntity">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IPStart" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="IPEnd" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="Country" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="Province" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="City" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="IPBelongTo" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="IPStartNum" Type="Int64" />
+          <Property Name="IPEndNum" Type="Int64" />
+        </EntityType>
+        <EntityType Name="LoginRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="LoginDate" Type="DateTime" />
+          <Property Name="LoginIP" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Type="Int64" Name="IsLoginFromClient" />
+        </EntityType>
+        <EntityType Name="ServerSetting">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ServerName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="ServerType" Type="Int32" Nullable="false" />
+          <Property Name="DNS" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="IP" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="HostLocation" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="IsDeleted" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="token">
+          <Key>
+            <PropertyRef Name="Token" />
+          </Key>
+          <Property Name="Token" Type="String" Nullable="false" MaxLength="36" Unicode="false" FixedLength="false" />
+          <Property Name="UserName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="IP" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="MacAddr" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="ExpiredDate" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="RouteData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="GroupID" Nullable="false" />
+          <Property Type="Int32" Name="SeqNoInGroup" />
+          <Property Type="String" Name="T1" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="T2" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="T3" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="RouteIP" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="IPBelongTo" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="RouteDate" />
+          <Property Type="DateTime" Name="CreatedDate" />
+          <Property Type="String" Name="CreatedBy" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="LastUpdatedDate" />
+          <Property Type="String" Name="LastUpdatedBy" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="IPBelongToProvince" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="IPBelongToCity" MaxLength="45" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="UserType" Nullable="false" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="FullName" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Email" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Phone" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Province" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="City" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Address" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Description" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CreatedBy" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CreatedDate" />
+          <Property Type="String" Name="LastUpdatedBy" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="LastUpdatedDate" />
+        </EntityType>
+        <EntityType Name="ClientIP">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="ClientPublicIP" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ClientPrivateIP" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SubmitFromServerIP" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ClientProvince" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ClientCity" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ClientDistinct" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ClientDetailAddr" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ExpectedOperatorProvince" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ExpectedOperatorCity" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ExpectedOperator" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="RealOperatorProvince" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="RealOperatorCity" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="RealOperator" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="Int64" Name="Status" />
+          <Property Type="String" Name="UserName" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ClientRecordor" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CreatedDate" />
+          <Property Type="DateTime" Name="LastUpdatedDate" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="IPDetectServerRepositoriesdbModelsStoreContainer" CdmEntityContainer="DataEntities">
+          <EntitySetMapping Name="IPEntities">
+            <EntityTypeMapping TypeName="IPDetectServer.Repositories.dbModels.IPEntity">
+              <MappingFragment StoreEntitySet="ipdatabase">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IPStart" ColumnName="IPStart" />
+                <ScalarProperty Name="IPEnd" ColumnName="IPEnd" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="IPBelongTo" ColumnName="IPBelongTo" />
+                <ScalarProperty Name="IPStartNum" ColumnName="IPStartNum" />
+                <ScalarProperty Name="IPEndNum" ColumnName="IPEndNum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoginRecords">
+            <EntityTypeMapping TypeName="IPDetectServer.Repositories.dbModels.LoginRecord">
+              <MappingFragment StoreEntitySet="loginrecords">
+                <ScalarProperty Name="IsLoginFromClient" ColumnName="IsLoginFromClient" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="LoginDate" ColumnName="LoginDate" />
+                <ScalarProperty Name="LoginIP" ColumnName="LoginIP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServerSettings">
+            <EntityTypeMapping TypeName="IPDetectServer.Repositories.dbModels.ServerSetting">
+              <MappingFragment StoreEntitySet="serversettings">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ServerName" ColumnName="ServerName" />
+                <ScalarProperty Name="ServerType" ColumnName="ServerType" />
+                <ScalarProperty Name="DNS" ColumnName="DNS" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="HostLocation" ColumnName="HostLocation" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tokens">
+            <EntityTypeMapping TypeName="IPDetectServer.Repositories.dbModels.token">
+              <MappingFragment StoreEntitySet="tokens">
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="MacAddr" ColumnName="MacAddr" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RouteDatas">
+            <EntityTypeMapping TypeName="IPDetectServer.Repositories.dbModels.RouteData">
+              <MappingFragment StoreEntitySet="routedatas">
+                <ScalarProperty Name="IPBelongToCity" ColumnName="IPBelongToCity" />
+                <ScalarProperty Name="IPBelongToProvince" ColumnName="IPBelongToProvince" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="RouteDate" ColumnName="RouteDate" />
+                <ScalarProperty Name="IPBelongTo" ColumnName="IPBelongTo" />
+                <ScalarProperty Name="RouteIP" ColumnName="RouteIP" />
+                <ScalarProperty Name="T3" ColumnName="T3" />
+                <ScalarProperty Name="T2" ColumnName="T2" />
+                <ScalarProperty Name="T1" ColumnName="T1" />
+                <ScalarProperty Name="SeqNoInGroup" ColumnName="SeqNoInGroup" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="IPDetectServer.Repositories.dbModels.User">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientIPs">
+            <EntityTypeMapping TypeName="IPDetectServer.Repositories.dbModels.ClientIP">
+              <MappingFragment StoreEntitySet="clientips">
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ClientRecordor" ColumnName="ClientRecordor" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RealOperator" ColumnName="RealOperator" />
+                <ScalarProperty Name="RealOperatorCity" ColumnName="RealOperatorCity" />
+                <ScalarProperty Name="RealOperatorProvince" ColumnName="RealOperatorProvince" />
+                <ScalarProperty Name="ExpectedOperator" ColumnName="ExpectedOperator" />
+                <ScalarProperty Name="ExpectedOperatorCity" ColumnName="ExpectedOperatorCity" />
+                <ScalarProperty Name="ExpectedOperatorProvince" ColumnName="ExpectedOperatorProvince" />
+                <ScalarProperty Name="ClientDetailAddr" ColumnName="ClientDetailAddr" />
+                <ScalarProperty Name="ClientDistinct" ColumnName="ClientDistinct" />
+                <ScalarProperty Name="ClientCity" ColumnName="ClientCity" />
+                <ScalarProperty Name="ClientProvince" ColumnName="ClientProvince" />
+                <ScalarProperty Name="SubmitFromServerIP" ColumnName="SubmitFromServerIP" />
+                <ScalarProperty Name="ClientPrivateIP" ColumnName="ClientPrivateIP" />
+                <ScalarProperty Name="ClientPublicIP" ColumnName="ClientPublicIP" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Model1">
+        <EntityTypeShape EntityType="IPDetectServer.Repositories.dbModels.IPEntity" Width="1.5" PointX="2.75" PointY="0.75" Height="2.7341113281249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="IPDetectServer.Repositories.dbModels.LoginRecord" Width="1.5" PointX="4.75" PointY="0.75" Height="1.7790128580729165" IsExpanded="true" />
+        <EntityTypeShape EntityType="IPDetectServer.Repositories.dbModels.ServerSetting" Width="1.5" PointX="2.75" PointY="4.75" Height="3.1161507161458335" IsExpanded="true" />
+        <EntityTypeShape EntityType="IPDetectServer.Repositories.dbModels.token" Width="1.5" PointX="4.75" PointY="3.75" Height="2.1610522460937496" IsExpanded="true" />
+        <EntityTypeShape EntityType="IPDetectServer.Repositories.dbModels.RouteData" Width="1.5" PointX="5.375" PointY="6.75" Height="3.4981901041666674" />
+        <EntityTypeShape EntityType="IPDetectServer.Repositories.dbModels.User" Width="1.5" PointX="0.5" PointY="4.75" Height="3.8802294921874996" />
+        <EntityTypeShape EntityType="IPDetectServer.Repositories.dbModels.ClientIP" Width="1.5" PointX="7.375" PointY="0.75" Height="4.6443082682291674" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

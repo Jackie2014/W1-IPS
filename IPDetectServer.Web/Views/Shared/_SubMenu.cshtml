@@ -1,0 +1,84 @@
+﻿@*@using Accela.Apps.Admin.Portal.Utility;
+@using Accela.Apps.Admin.Portal.Models;
+@using Accela.Apps.Admin.Resources;
+@{
+    var agencyInfo = @AdminResources.GetString("Admin_Shared_SubMenu_AgencyInfo");
+    var enviroments = @AdminResources.GetString("Admin_Shared_SubMenu_Enviroments");
+    var adimins = @AdminResources.GetString("Admin_Shared_SubMenu_Admins");
+    var editDev = @AdminResources.GetString("Admin_Shared_SubMenu_EditDev");
+    var apps = @AdminResources.GetString("Admin_Shared_SubMenu_Apps");
+    var defulatSettings = AdminResources.GetString("Admin_Administrator_AppSettings");
+    var appInfo = AdminResources.GetString("Admin_Administrator_AppInfo");     
+}
+<script type="text/javascript">   
+    $(function () {
+        setCurrentSubMenu();
+        setSubMenuMouseActionEeffect();
+    });
+
+    // Set mouseover and mouseut effect.
+    function setSubMenuMouseActionEeffect() {
+        $(".admin-submenu-linkbtn").each(function () {
+            $(this).bind({ mousemove: function () { setAllSubMenuUnSelected(); setSubMenuSelected(this); },
+                mouseout: function () { setSubMenuUnSelected(this); setCurrentSubMenu(); },
+                click: function () {$('#hidCurrentSubMenu').val($(this).attr('name'));
+                }               
+            });
+            
+        });
+    }
+
+    // Set current sub menu.    
+    function setCurrentSubMenu() {
+        $(".admin-submenu-linkbtn").each(function () {
+            if ($(this).attr('name') == $('#hidCurrentSubMenu').val()) {
+                setSubMenuSelected(this);
+            }
+            else {
+                setSubMenuUnSelected(this);
+            }
+        });        
+    }
+
+    // Set menu selected.
+    function setSubMenuSelected(menu) {
+        $(menu).get(0).className = "admin-submenu-linkbtn current";
+    }
+
+    // Set menu unselected.
+    function setSubMenuUnSelected(menu) {
+        $(menu).get(0).className = "admin-submenu-linkbtn";
+    } 
+
+    // Set all menu unselected
+    function setAllSubMenuUnSelected() {
+        $(".admin-submenu-linkbtn").each(function (e) {
+            setSubMenuUnSelected(this);
+        });
+    }
+</script>
+@{
+    var isEnterFromSubMenu = ViewBag.SubMenuName != null;
+}
+@Html.Hidden("hidCurrentSubMenu", ViewBag.SubMenuName as string)
+@if ((ViewBag.AgencyID != null || ViewBag.DevId != null) && (isEnterFromSubMenu)) 
+{
+    <ul class="admin-sub-menu">
+        @if (ViewBag.AgencyID != null)
+        {
+            <li><a href="@Url.Action("Edit", "AgencyEdit", new { id = ViewBag.AgencyID })" class="admin-submenu-linkbtn" name="AgencyInfo"><span>@agencyInfo</span></a></li>
+            if (ViewBag.AgencyType == 1)
+            {
+                <li><a href="@Url.Action("Index", "EnvironmentList", new { id = ViewBag.AgencyID })" class="admin-submenu-linkbtn" name="Environments"><span>@enviroments</span></a></li>
+            }
+            <li><a href="@Url.Action("Index", "AgencyAppsList", new { id = ViewBag.AgencyID })" class="admin-submenu-linkbtn" name="Apps"><span>Apps</span></a></li>
+            <li><a href="@Url.Action("Index", "AdminManageList", new { id = ViewBag.AgencyID })" class="admin-submenu-linkbtn" name="AgencyAdministrators"><span>@adimins</span></a></li>
+        }
+        @if (ViewBag.DevId != null)
+        { 
+            <li><a href="@Url.Action("Edit", "DeveloperEdit", new { id = ViewBag.DevId })" class="admin-submenu-linkbtn" name="DevInfo"><span>@editDev</span></a></li>
+            <li><a href="@Url.Action("Index", "ApplicationList", new { id = ViewBag.DevId })" class="admin-submenu-linkbtn" name="AppInfo"><span>@apps</span></a></li>
+        }       
+    </ul>
+}
+*@
