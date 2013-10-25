@@ -5,7 +5,7 @@ using System.Text;
 
 namespace IPDetectServer.Models.WS
 {
-    public class UpdateUserResponse
+    public class AjaxResponse
     {
         public bool IsSuccess
         {

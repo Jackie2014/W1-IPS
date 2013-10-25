@@ -176,6 +176,38 @@ namespace IPDetectServer.Repositories
             }
         }
         private ObjectSet<ClientIP> _ClientIPs;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<ipscanresults> ipscanresults
+        {
+            get
+            {
+                if ((_ipscanresults == null))
+                {
+                    _ipscanresults = base.CreateObjectSet<ipscanresults>("ipscanresults");
+                }
+                return _ipscanresults;
+            }
+        }
+        private ObjectSet<ipscanresults> _ipscanresults;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<cidrsettings> cidrsettings
+        {
+            get
+            {
+                if ((_cidrsettings == null))
+                {
+                    _cidrsettings = base.CreateObjectSet<cidrsettings>("cidrsettings");
+                }
+                return _cidrsettings;
+            }
+        }
+        private ObjectSet<cidrsettings> _cidrsettings;
 
         #endregion
 
@@ -236,6 +268,22 @@ namespace IPDetectServer.Repositories
         {
             base.AddObject("ClientIPs", clientIP);
         }
+    
+        /// <summary>
+        /// 用于向 ipscanresults EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToipscanresults(ipscanresults ipscanresults)
+        {
+            base.AddObject("ipscanresults", ipscanresults);
+        }
+    
+        /// <summary>
+        /// 用于向 cidrsettings EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddTocidrsettings(cidrsettings cidrsettings)
+        {
+            base.AddObject("cidrsettings", cidrsettings);
+        }
 
         #endregion
 
@@ -244,6 +292,349 @@ namespace IPDetectServer.Repositories
     #endregion
 
     #region 实体
+    
+    /// <summary>
+    /// 没有元数据文档可用。
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="IPDetectServer.Repositories.dbModels", Name="cidrsettings")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class cidrsettings : EntityObject
+    {
+        #region 工厂方法
+    
+        /// <summary>
+        /// 创建新的 cidrsettings 对象。
+        /// </summary>
+        /// <param name="id">ID 属性的初始值。</param>
+        /// <param name="iPStart">IPStart 属性的初始值。</param>
+        /// <param name="iPEnd">IPEnd 属性的初始值。</param>
+        /// <param name="iPStartNum">IPStartNum 属性的初始值。</param>
+        /// <param name="iPEndNum">IPEndNum 属性的初始值。</param>
+        /// <param name="tCPThreshold">TCPThreshold 属性的初始值。</param>
+        /// <param name="tCPPort">TCPPort 属性的初始值。</param>
+        /// <param name="tTLThreshold">TTLThreshold 属性的初始值。</param>
+        /// <param name="createdBy">CreatedBy 属性的初始值。</param>
+        /// <param name="createdDate">CreatedDate 属性的初始值。</param>
+        /// <param name="lastUpdatedBy">LastUpdatedBy 属性的初始值。</param>
+        /// <param name="lastUpdatedDate">LastUpdatedDate 属性的初始值。</param>
+        public static cidrsettings Createcidrsettings(global::System.String id, global::System.String iPStart, global::System.String iPEnd, global::System.Int32 iPStartNum, global::System.Int32 iPEndNum, global::System.Int32 tCPThreshold, global::System.Int32 tCPPort, global::System.Int32 tTLThreshold, global::System.String createdBy, global::System.DateTime createdDate, global::System.String lastUpdatedBy, global::System.DateTime lastUpdatedDate)
+        {
+            cidrsettings cidrsettings = new cidrsettings();
+            cidrsettings.ID = id;
+            cidrsettings.IPStart = iPStart;
+            cidrsettings.IPEnd = iPEnd;
+            cidrsettings.IPStartNum = iPStartNum;
+            cidrsettings.IPEndNum = iPEndNum;
+            cidrsettings.TCPThreshold = tCPThreshold;
+            cidrsettings.TCPPort = tCPPort;
+            cidrsettings.TTLThreshold = tTLThreshold;
+            cidrsettings.CreatedBy = createdBy;
+            cidrsettings.CreatedDate = createdDate;
+            cidrsettings.LastUpdatedBy = lastUpdatedBy;
+            cidrsettings.LastUpdatedDate = lastUpdatedDate;
+            return cidrsettings;
+        }
+
+        #endregion
+
+        #region 基元属性
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.String _ID;
+        partial void OnIDChanging(global::System.String value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String IPStart
+        {
+            get
+            {
+                return _IPStart;
+            }
+            set
+            {
+                OnIPStartChanging(value);
+                ReportPropertyChanging("IPStart");
+                _IPStart = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("IPStart");
+                OnIPStartChanged();
+            }
+        }
+        private global::System.String _IPStart;
+        partial void OnIPStartChanging(global::System.String value);
+        partial void OnIPStartChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String IPEnd
+        {
+            get
+            {
+                return _IPEnd;
+            }
+            set
+            {
+                OnIPEndChanging(value);
+                ReportPropertyChanging("IPEnd");
+                _IPEnd = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("IPEnd");
+                OnIPEndChanged();
+            }
+        }
+        private global::System.String _IPEnd;
+        partial void OnIPEndChanging(global::System.String value);
+        partial void OnIPEndChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 IPStartNum
+        {
+            get
+            {
+                return _IPStartNum;
+            }
+            set
+            {
+                OnIPStartNumChanging(value);
+                ReportPropertyChanging("IPStartNum");
+                _IPStartNum = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IPStartNum");
+                OnIPStartNumChanged();
+            }
+        }
+        private global::System.Int32 _IPStartNum;
+        partial void OnIPStartNumChanging(global::System.Int32 value);
+        partial void OnIPStartNumChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 IPEndNum
+        {
+            get
+            {
+                return _IPEndNum;
+            }
+            set
+            {
+                OnIPEndNumChanging(value);
+                ReportPropertyChanging("IPEndNum");
+                _IPEndNum = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IPEndNum");
+                OnIPEndNumChanged();
+            }
+        }
+        private global::System.Int32 _IPEndNum;
+        partial void OnIPEndNumChanging(global::System.Int32 value);
+        partial void OnIPEndNumChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 TCPThreshold
+        {
+            get
+            {
+                return _TCPThreshold;
+            }
+            set
+            {
+                OnTCPThresholdChanging(value);
+                ReportPropertyChanging("TCPThreshold");
+                _TCPThreshold = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TCPThreshold");
+                OnTCPThresholdChanged();
+            }
+        }
+        private global::System.Int32 _TCPThreshold;
+        partial void OnTCPThresholdChanging(global::System.Int32 value);
+        partial void OnTCPThresholdChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 TCPPort
+        {
+            get
+            {
+                return _TCPPort;
+            }
+            set
+            {
+                OnTCPPortChanging(value);
+                ReportPropertyChanging("TCPPort");
+                _TCPPort = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TCPPort");
+                OnTCPPortChanged();
+            }
+        }
+        private global::System.Int32 _TCPPort;
+        partial void OnTCPPortChanging(global::System.Int32 value);
+        partial void OnTCPPortChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 TTLThreshold
+        {
+            get
+            {
+                return _TTLThreshold;
+            }
+            set
+            {
+                OnTTLThresholdChanging(value);
+                ReportPropertyChanging("TTLThreshold");
+                _TTLThreshold = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TTLThreshold");
+                OnTTLThresholdChanged();
+            }
+        }
+        private global::System.Int32 _TTLThreshold;
+        partial void OnTTLThresholdChanging(global::System.Int32 value);
+        partial void OnTTLThresholdChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String CreatedBy
+        {
+            get
+            {
+                return _CreatedBy;
+            }
+            set
+            {
+                OnCreatedByChanging(value);
+                ReportPropertyChanging("CreatedBy");
+                _CreatedBy = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("CreatedBy");
+                OnCreatedByChanged();
+            }
+        }
+        private global::System.String _CreatedBy;
+        partial void OnCreatedByChanging(global::System.String value);
+        partial void OnCreatedByChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedDate
+        {
+            get
+            {
+                return _CreatedDate;
+            }
+            set
+            {
+                OnCreatedDateChanging(value);
+                ReportPropertyChanging("CreatedDate");
+                _CreatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedDate");
+                OnCreatedDateChanged();
+            }
+        }
+        private global::System.DateTime _CreatedDate;
+        partial void OnCreatedDateChanging(global::System.DateTime value);
+        partial void OnCreatedDateChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String LastUpdatedBy
+        {
+            get
+            {
+                return _LastUpdatedBy;
+            }
+            set
+            {
+                OnLastUpdatedByChanging(value);
+                ReportPropertyChanging("LastUpdatedBy");
+                _LastUpdatedBy = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("LastUpdatedBy");
+                OnLastUpdatedByChanged();
+            }
+        }
+        private global::System.String _LastUpdatedBy;
+        partial void OnLastUpdatedByChanging(global::System.String value);
+        partial void OnLastUpdatedByChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastUpdatedDate
+        {
+            get
+            {
+                return _LastUpdatedDate;
+            }
+            set
+            {
+                OnLastUpdatedDateChanging(value);
+                ReportPropertyChanging("LastUpdatedDate");
+                _LastUpdatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedDate");
+                OnLastUpdatedDateChanged();
+            }
+        }
+        private global::System.DateTime _LastUpdatedDate;
+        partial void OnLastUpdatedDateChanging(global::System.DateTime value);
+        partial void OnLastUpdatedDateChanged();
+
+        #endregion
+
+    
+    }
     
     /// <summary>
     /// 没有元数据文档可用。
@@ -981,6 +1372,271 @@ namespace IPDetectServer.Repositories
         private Nullable<global::System.Int64> _IPEndNum;
         partial void OnIPEndNumChanging(Nullable<global::System.Int64> value);
         partial void OnIPEndNumChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// 没有元数据文档可用。
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="IPDetectServer.Repositories.dbModels", Name="ipscanresults")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class ipscanresults : EntityObject
+    {
+        #region 工厂方法
+    
+        /// <summary>
+        /// 创建新的 ipscanresults 对象。
+        /// </summary>
+        /// <param name="id">ID 属性的初始值。</param>
+        /// <param name="iP">IP 属性的初始值。</param>
+        /// <param name="tCPTime">TCPTime 属性的初始值。</param>
+        /// <param name="tCPValidation">TCPValidation 属性的初始值。</param>
+        /// <param name="tTLValidation">TTLValidation 属性的初始值。</param>
+        /// <param name="createdDate">CreatedDate 属性的初始值。</param>
+        /// <param name="createdBy">CreatedBy 属性的初始值。</param>
+        /// <param name="lastUpdatedDate">LastUpdatedDate 属性的初始值。</param>
+        /// <param name="lastUpdatedBy">LastUpdatedBy 属性的初始值。</param>
+        public static ipscanresults Createipscanresults(global::System.Int64 id, global::System.String iP, global::System.Int32 tCPTime, global::System.String tCPValidation, global::System.String tTLValidation, global::System.DateTime createdDate, global::System.String createdBy, global::System.DateTime lastUpdatedDate, global::System.String lastUpdatedBy)
+        {
+            ipscanresults ipscanresults = new ipscanresults();
+            ipscanresults.ID = id;
+            ipscanresults.IP = iP;
+            ipscanresults.TCPTime = tCPTime;
+            ipscanresults.TCPValidation = tCPValidation;
+            ipscanresults.TTLValidation = tTLValidation;
+            ipscanresults.CreatedDate = createdDate;
+            ipscanresults.CreatedBy = createdBy;
+            ipscanresults.LastUpdatedDate = lastUpdatedDate;
+            ipscanresults.LastUpdatedBy = lastUpdatedBy;
+            return ipscanresults;
+        }
+
+        #endregion
+
+        #region 基元属性
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int64 _ID;
+        partial void OnIDChanging(global::System.Int64 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String IP
+        {
+            get
+            {
+                return _IP;
+            }
+            set
+            {
+                OnIPChanging(value);
+                ReportPropertyChanging("IP");
+                _IP = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("IP");
+                OnIPChanged();
+            }
+        }
+        private global::System.String _IP;
+        partial void OnIPChanging(global::System.String value);
+        partial void OnIPChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 TCPTime
+        {
+            get
+            {
+                return _TCPTime;
+            }
+            set
+            {
+                OnTCPTimeChanging(value);
+                ReportPropertyChanging("TCPTime");
+                _TCPTime = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TCPTime");
+                OnTCPTimeChanged();
+            }
+        }
+        private global::System.Int32 _TCPTime;
+        partial void OnTCPTimeChanging(global::System.Int32 value);
+        partial void OnTCPTimeChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String TCPValidation
+        {
+            get
+            {
+                return _TCPValidation;
+            }
+            set
+            {
+                OnTCPValidationChanging(value);
+                ReportPropertyChanging("TCPValidation");
+                _TCPValidation = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("TCPValidation");
+                OnTCPValidationChanged();
+            }
+        }
+        private global::System.String _TCPValidation;
+        partial void OnTCPValidationChanging(global::System.String value);
+        partial void OnTCPValidationChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String TTLValidation
+        {
+            get
+            {
+                return _TTLValidation;
+            }
+            set
+            {
+                OnTTLValidationChanging(value);
+                ReportPropertyChanging("TTLValidation");
+                _TTLValidation = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("TTLValidation");
+                OnTTLValidationChanged();
+            }
+        }
+        private global::System.String _TTLValidation;
+        partial void OnTTLValidationChanging(global::System.String value);
+        partial void OnTTLValidationChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedDate
+        {
+            get
+            {
+                return _CreatedDate;
+            }
+            set
+            {
+                OnCreatedDateChanging(value);
+                ReportPropertyChanging("CreatedDate");
+                _CreatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedDate");
+                OnCreatedDateChanged();
+            }
+        }
+        private global::System.DateTime _CreatedDate;
+        partial void OnCreatedDateChanging(global::System.DateTime value);
+        partial void OnCreatedDateChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String CreatedBy
+        {
+            get
+            {
+                return _CreatedBy;
+            }
+            set
+            {
+                OnCreatedByChanging(value);
+                ReportPropertyChanging("CreatedBy");
+                _CreatedBy = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("CreatedBy");
+                OnCreatedByChanged();
+            }
+        }
+        private global::System.String _CreatedBy;
+        partial void OnCreatedByChanging(global::System.String value);
+        partial void OnCreatedByChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastUpdatedDate
+        {
+            get
+            {
+                return _LastUpdatedDate;
+            }
+            set
+            {
+                OnLastUpdatedDateChanging(value);
+                ReportPropertyChanging("LastUpdatedDate");
+                _LastUpdatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedDate");
+                OnLastUpdatedDateChanged();
+            }
+        }
+        private global::System.DateTime _LastUpdatedDate;
+        partial void OnLastUpdatedDateChanging(global::System.DateTime value);
+        partial void OnLastUpdatedDateChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String LastUpdatedBy
+        {
+            get
+            {
+                return _LastUpdatedBy;
+            }
+            set
+            {
+                OnLastUpdatedByChanging(value);
+                ReportPropertyChanging("LastUpdatedBy");
+                _LastUpdatedBy = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("LastUpdatedBy");
+                OnLastUpdatedByChanged();
+            }
+        }
+        private global::System.String _LastUpdatedBy;
+        partial void OnLastUpdatedByChanging(global::System.String value);
+        partial void OnLastUpdatedByChanged();
 
         #endregion
 

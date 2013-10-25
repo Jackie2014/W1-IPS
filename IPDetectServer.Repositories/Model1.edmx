@@ -6,14 +6,33 @@
     <edmx:StorageModels>
     <Schema Namespace="IPDetectServer.Repositories.dbModels.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.1" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="IPDetectServerRepositoriesdbModelsStoreContainer">
+          <EntitySet Name="cidrsettings" EntityType="IPDetectServer.Repositories.dbModels.Store.cidrsettings" store:Type="Tables" Schema="ipmonitordb" />
           <EntitySet Name="clientips" EntityType="IPDetectServer.Repositories.dbModels.Store.clientips" store:Type="Tables" Schema="ipmonitordb" />
           <EntitySet Name="ipdatabase" EntityType="IPDetectServer.Repositories.dbModels.Store.ipdatabase" store:Type="Tables" Schema="ipmonitordb" />
+          <EntitySet Name="ipscanresults" EntityType="IPDetectServer.Repositories.dbModels.Store.ipscanresults" store:Type="Tables" Schema="ipmonitordb" />
           <EntitySet Name="loginrecords" EntityType="IPDetectServer.Repositories.dbModels.Store.loginrecords" store:Type="Tables" Schema="ipmonitordb" />
           <EntitySet Name="routedatas" EntityType="IPDetectServer.Repositories.dbModels.Store.routedatas" store:Type="Tables" Schema="ipmonitordb" />
           <EntitySet Name="serversettings" EntityType="IPDetectServer.Repositories.dbModels.Store.serversettings" store:Type="Tables" Schema="ipmonitordb" />
           <EntitySet Name="tokens" EntityType="IPDetectServer.Repositories.dbModels.Store.tokens" store:Type="Tables" Schema="ipmonitordb" />
           <EntitySet Name="users" EntityType="IPDetectServer.Repositories.dbModels.Store.users" store:Type="Tables" Schema="ipmonitordb" />
         </EntityContainer>
+        <EntityType Name="cidrsettings">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" Nullable="false" MaxLength="36" />
+          <Property Name="IPStart" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="IPEnd" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="IPStartNum" Type="int" Nullable="false" />
+          <Property Name="IPEndNum" Type="int" Nullable="false" />
+          <Property Name="TCPThreshold" Type="int" Nullable="false" />
+          <Property Name="TCPPort" Type="int" Nullable="false" />
+          <Property Name="TTLThreshold" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdatedBy" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="clientips">
           <Key>
             <PropertyRef Name="ID" />
@@ -51,6 +70,20 @@
           <Property Name="IPBelongTo" Type="varchar" MaxLength="100" />
           <Property Name="IPStartNum" Type="bigint" />
           <Property Name="IPEndNum" Type="bigint" />
+        </EntityType>
+        <EntityType Name="ipscanresults">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="IP" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="TCPTime" Type="int" Nullable="false" />
+          <Property Name="TCPValidation" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="TTLValidation" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdatedBy" Type="varchar" Nullable="false" MaxLength="50" />
         </EntityType>
         <EntityType Name="loginrecords">
           <Key>
@@ -141,6 +174,8 @@
           <EntitySet Name="RouteDatas" EntityType="IPDetectServer.Repositories.dbModels.RouteData" />
           <EntitySet Name="Users" EntityType="IPDetectServer.Repositories.dbModels.User" />
           <EntitySet Name="ClientIPs" EntityType="IPDetectServer.Repositories.dbModels.ClientIP" />
+          <EntitySet Name="ipscanresults" EntityType="IPDetectServer.Repositories.dbModels.ipscanresults" />
+          <EntitySet Name="cidrsettings" EntityType="IPDetectServer.Repositories.dbModels.cidrsettings" />
         </EntityContainer>
         <EntityType Name="IPEntity">
           <Key>
@@ -256,6 +291,37 @@
           <Property Type="String" Name="ClientRecordor" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="CreatedDate" />
           <Property Type="DateTime" Name="LastUpdatedDate" />
+        </EntityType>
+        <EntityType Name="ipscanresults">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="IP" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="TCPTime" Nullable="false" />
+          <Property Type="String" Name="TCPValidation" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TTLValidation" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="LastUpdatedDate" Nullable="false" />
+          <Property Type="String" Name="LastUpdatedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="cidrsettings">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="String" Name="ID" Nullable="false" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="IPStart" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="IPEnd" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="IPStartNum" Nullable="false" />
+          <Property Type="Int32" Name="IPEndNum" Nullable="false" />
+          <Property Type="Int32" Name="TCPThreshold" Nullable="false" />
+          <Property Type="Int32" Name="TCPPort" Nullable="false" />
+          <Property Type="Int32" Name="TTLThreshold" Nullable="false" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" />
+          <Property Type="String" Name="LastUpdatedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="LastUpdatedDate" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -385,6 +451,39 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ipscanresults">
+            <EntityTypeMapping TypeName="IPDetectServer.Repositories.dbModels.ipscanresults">
+              <MappingFragment StoreEntitySet="ipscanresults">
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="TTLValidation" ColumnName="TTLValidation" />
+                <ScalarProperty Name="TCPValidation" ColumnName="TCPValidation" />
+                <ScalarProperty Name="TCPTime" ColumnName="TCPTime" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cidrsettings">
+            <EntityTypeMapping TypeName="IPDetectServer.Repositories.dbModels.cidrsettings">
+              <MappingFragment StoreEntitySet="cidrsettings">
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="TTLThreshold" ColumnName="TTLThreshold" />
+                <ScalarProperty Name="TCPPort" ColumnName="TCPPort" />
+                <ScalarProperty Name="TCPThreshold" ColumnName="TCPThreshold" />
+                <ScalarProperty Name="IPEndNum" ColumnName="IPEndNum" />
+                <ScalarProperty Name="IPStartNum" ColumnName="IPStartNum" />
+                <ScalarProperty Name="IPEnd" ColumnName="IPEnd" />
+                <ScalarProperty Name="IPStart" ColumnName="IPStart" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -413,6 +512,8 @@
         <EntityTypeShape EntityType="IPDetectServer.Repositories.dbModels.RouteData" Width="1.5" PointX="5.375" PointY="6.75" Height="3.4981901041666674" />
         <EntityTypeShape EntityType="IPDetectServer.Repositories.dbModels.User" Width="1.5" PointX="0.5" PointY="4.75" Height="3.8802294921874996" />
         <EntityTypeShape EntityType="IPDetectServer.Repositories.dbModels.ClientIP" Width="1.5" PointX="7.375" PointY="0.75" Height="4.6443082682291674" />
+        <EntityTypeShape EntityType="IPDetectServer.Repositories.dbModels.ipscanresults" Width="1.5" PointX="9.375" PointY="0.75" Height="2.7341113281250031" />
+        <EntityTypeShape EntityType="IPDetectServer.Repositories.dbModels.cidrsettings" Width="1.5" PointX="7.375" PointY="6.75" Height="3.3071704101562531" />
       </Diagram>
     </Diagrams>
   </Designer>

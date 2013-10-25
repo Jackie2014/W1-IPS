@@ -75,6 +75,7 @@
     <Compile Include="Handlers\MessageContextHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceAssemble.cs" />
+    <Compile Include="V1\CIDRSettingService.cs" />
     <Compile Include="V1\MonitorDataService.cs" />
     <Compile Include="V1\TokenService.cs" />
     <Compile Include="V1\UserService.cs" />

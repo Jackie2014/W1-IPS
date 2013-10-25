@@ -39,7 +39,7 @@ namespace IPDetectServer.Services
             else
             {
                 response.Token = userModel.Token;
-
+                response.IsAdministrator = userModel.UserType == 0;
                 // add login record
                 //LoginRecordRepository recordRep = new LoginRecordRepository();
                 //LoginRecord loginRecord = new LoginRecord 

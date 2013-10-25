@@ -86,3 +86,28 @@ else
 }
 </li>
 </ul>
+<ul class="ul_leftmenu">
+<li class="menu_level1">地址扫描</li>
+<li class="menu_level2">
+@if (("CIDRSetting".Equals(controllName, StringComparison.OrdinalIgnoreCase) && "Index".Equals(actionName, StringComparison.OrdinalIgnoreCase))
+    || ("CIDRSetting".Equals(controllName, StringComparison.OrdinalIgnoreCase) && "New".Equals(actionName, StringComparison.OrdinalIgnoreCase)))
+{
+    @Html.ActionLink(">地址段维护", "Index", "CIDRSetting", null, new { @class = "leftmenuselected" })  
+}
+else
+{
+    @Html.ActionLink(">地址段维护", "Index", "CIDRSetting", null, new { @class = "leftmenu" })      
+} 
+</li>
+
+<li class="menu_level2">
+@if ("IPScan".Equals(controllName, StringComparison.OrdinalIgnoreCase) && "Index".Equals(actionName, StringComparison.OrdinalIgnoreCase))
+{
+    @Html.ActionLink(">扫描查询", "Index", "IPScan", null, new { @class = "leftmenuselected" })  
+}
+else
+{
+    @Html.ActionLink(">扫描查询", "Index", "IPScan", null, new { @class = "leftmenu" })      
+} 
+</li>
+</ul>

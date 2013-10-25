@@ -119,6 +119,13 @@ namespace IPDetectServer.Business
 
         public void DeleteUser(string userId)
         {
+            if(String.IsNullOrWhiteSpace(userId))
+            {
+                return;
+            }
+            TokenRepository tr = new TokenRepository();
+            tr.DeleteTokens(userId);
+
             UserRepository ur = new UserRepository();
             ur.DeleteUser(userId);
         }

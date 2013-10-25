@@ -14,5 +14,11 @@ namespace IPDetectServer.Models
             get;
             set;
         }
+
+        public bool IsAdministrator
+        {
+            get;
+            set;
+        }
     }
 }

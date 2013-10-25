@@ -23,6 +23,19 @@ namespace IPDetectServer.Repositories
             return tokenModel.Token;
         }
 
+        public void DeleteTokens(string userName)
+        {
+            using (var dbContext = new DataEntities())
+            {
+                foreach (var item in dbContext.Tokens.Where(t => t.UserName == userName))
+                {
+                    dbContext.DeleteObject(item);
+                }
+                dbContext.SaveChanges();
+            }
+
+        }
+
         public token GetTokenModel(string token)
         {
             token tokenModel = null;

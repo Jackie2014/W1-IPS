@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Constants.cs" />
+    <Compile Include="Common\IPHelper.cs" />
     <Compile Include="Common\JsonConverter.cs" />
     <Compile Include="Common\LogFactory.cs" />
     <Compile Include="Encrypt\AESHelper.cs" />

@@ -62,14 +62,14 @@ namespace IPDetectServer.Services
         }
 
         [POST("{userid}/update")]
-        public UpdateUserResponse Update([FromBody]UpdateUserRequest request, string userid)
+        public AjaxResponse Update([FromBody]UpdateUserRequest request, string userid)
         {
             if (request == null)
             {
                 throw new BadRequestException();
             }
 
-            var response = new UpdateUserResponse();
+            var response = new AjaxResponse();
             UserBusiness ub = new UserBusiness();
 
             try
@@ -111,9 +111,9 @@ namespace IPDetectServer.Services
         }
 
         [DELETE("{userid}")]
-        public UpdateUserResponse DeleteUser(string userid)
+        public AjaxResponse DeleteUser(string userid)
         {
-            var response = new UpdateUserResponse();
+            var response = new AjaxResponse();
 
             try
             {
@@ -125,7 +125,8 @@ namespace IPDetectServer.Services
                 }
 
                 UserBusiness ub = new UserBusiness();
-                var user = ub.GetUser(userid);
+
+                var user = ub.GetUser(Context.LoginName);
 
                 // 2 means 客户端用户
                 if (user.UserType == 2)

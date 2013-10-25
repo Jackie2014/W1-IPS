@@ -1,0 +1,51 @@
+﻿@model IPDetectServer.Models.CIDRSettingModel
+@{
+    ViewBag.Title = "新增地址段";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var strValidationSummary = string.Empty;
+    var validationSummary = Html.ValidationSummary("", new { @class = "nolist" });
+    if (validationSummary != null)
+    {
+        strValidationSummary = validationSummary.ToString();
+    }
+}
+
+@using (@Html.BeginForm())
+{
+    <ul>
+        <li class="content-title">&nbsp;&nbsp;新增地址段&nbsp;&nbsp;&nbsp;&nbsp;==><a href="/cidrsetting/index">返回</a></li>
+    </ul>
+     <div class="group-in-a-line-20">
+        <div class="same_line" style="width:9px;"></div>
+        <div class="same_line" style="width:800px;">@Html.Raw(strValidationSummary)</div>
+    </div>
+    <div class="group-in-a-line">
+        <div class="same_line" style="width:140px;">&nbsp;&nbsp;IP段开始地址：</div>
+        <div class="same_line" style="width:160px;">@Html.TextBoxFor(m => m.IPStart, new { @maxlength = "50", style = "width:150px" })</div>
+        <div class="same_line" style="width:10px;color:Red">*</div>
+    </div>
+
+    <div class="group-in-a-line">
+        <div class="same_line" style="width:140px;">&nbsp;&nbsp;IP段结束地址：</div>
+        <div class="same_line" style="width:160px;">@Html.TextBoxFor(m => m.IPEnd, new { @maxlength = "50", style = "width:150px" })</div>
+        <div class="same_line" style="width:10px;color:Red">*</div>
+    </div>
+    <div class="group-in-a-line">
+        <div class="same_line" style="width:140px;">&nbsp;&nbsp;TCP端口：</div>
+        <div class="same_line" style="width:160px;">@Html.TextBoxFor(m => m.TCPPort, new { @maxlength = "50", style = "width:150px" })</div>
+        <div class="same_line" style="width:10px;color:Red">*</div>
+    </div>
+    <div class="group-in-a-line">
+        <div class="same_line" style="width:140px;">&nbsp;&nbsp;TCP响应时间阀值(ms)：</div>
+        <div class="same_line" style="width:160px;">@Html.TextBoxFor(m => m.TCPFaZhi, new { @maxlength = "10", style = "width:150px" })</div>
+        <div class="same_line" style="width:10px;color:Red">*</div>
+    </div>
+    <div class="group-in-a-line">
+        <div class="same_line" style="width:140px;">&nbsp;&nbsp;TTL阀值：</div>
+        <div class="same_line" style="width:160px;">@Html.TextBoxFor(m => m.TTLFaZhi, new { @maxlength = "10", style = "width:150px" })</div>
+        <div class="same_line" style="width:10px;color:Red">*</div>
+    </div>
+    <br />
+    <input type="submit" value="新增" name="btnAdd" class="button" /> @Html.Raw("&nbsp;&nbsp;&nbsp;")
+      <input type="submit" value="重&nbsp;&nbsp;&nbsp;&nbsp;置" name="btnReset" class="button_reset" />
+}

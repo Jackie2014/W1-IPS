@@ -54,8 +54,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CIDRSettingRepository.cs" />
     <Compile Include="GroupByAccountAndStatusModel.cs" />
     <Compile Include="GroupByRegionAndStatusModel.cs" />
+    <Compile Include="IPScanResultRepository.cs" />
     <Compile Include="LoginRecordRepository.cs" />
     <Compile Include="Model1.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -42,9 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CIDRSettingModel.cs" />
     <Compile Include="ClientIPModel.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="GroupByAccountModel.cs" />
+    <Compile Include="IPScanResult.cs" />
     <Compile Include="UserModel.cs" />
     <Compile Include="WS\ChangePasswordRequest.cs" />
     <Compile Include="WS\ChangePasswordResponse.cs" />

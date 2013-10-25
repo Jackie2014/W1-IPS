@@ -96,7 +96,7 @@ function changePassword(token)
     var valid = verifyRequiredFieldsForPassword();
     if (valid) {
         var userid = document.getElementById("LoginNameForPassword").value;
-        var url = '~/apis/v1/users/' + userid + '/changepassword';
+        var url = '/apis/v1/users/' + userid + '/changepassword';
         var password1 = document.getElementById("NewPassword1").value;
         var data = '{"NewPassword":"' + password1 + '"}';
         $.ajax({
@@ -119,7 +119,8 @@ function changePassword(token)
                     
             },
             error: function(result) {
-                $("#lblChangePasswordResult").html("发生未知的错误:" + result);
+                alert(result.status + result.responseText);
+                $("#lblChangePasswordResult").html("发生未知的错误:" + result.status);
             },
         });
     }
@@ -130,7 +131,7 @@ function update(token)
     var valid = verifyRequiredFields();
     if (valid) {
         var userid = document.getElementById("SelectedLoginName").value;
-        var url = '~/apis/v1/users/' + userid + '/update';
+        var url = '/apis/v1/users/' + userid + '/update';
         var fullName = document.getElementById("EditName").value;
         var city = document.getElementById("EditCity").value;
         var phone = document.getElementById("EditPhone").value;
@@ -158,7 +159,9 @@ function update(token)
                 }    
             },
             error: function(result) {
-                $("#lblEditUserResult").html("发生未知的错误:" + result);
+                alert(result.status + result.responseText);
+
+                $("#lblEditUserResult").html("发生未知的错误:" + result.status);
             },
         });
     }
@@ -167,7 +170,7 @@ function update(token)
 function deleteRow(token)
 { 
     var userid = $("#hidSelectedUserRow").val();
-    var url = '~/apis/v1/users/' + userid;
+    var url = '/apis/v1/users/' + userid;
     $.ajax({
         type: 'DELETE',
         beforeSend: function (request) {
@@ -181,14 +184,15 @@ function deleteRow(token)
             {
                 currentEditTR.remove();
                 hideDeleteConfirmWindow();
-                $("#TotalRows").val($("#TotalRows").val() - 1);
+                //$("#TotalRows").val($("#TotalRows").val() - 1);
             }
-            else{
+            else{alert("error");
                 alert(result.Message);
             }    
         },
         error: function(result) {
-            alert("发生未知的错误:" + result);
+            alert(result.status + result.responseText);
+            alert("发生未知的错误:" + result.status);
         },
     });
 }

@@ -188,6 +188,8 @@
     <Compile Include="Controllers\StatByAccountController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\StatByRegionController.cs" />
+    <Compile Include="Controllers\IPScanController.cs" />
+    <Compile Include="Controllers\CIDRSettingController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -200,6 +202,8 @@
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\StatByRegionViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\CIDRManageViewModel.cs" />
+    <Compile Include="ViewModels\IPScanQueryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -327,6 +331,9 @@
     <Content Include="Views\StatByRegion\Index.cshtml" />
     <Content Include="Views\StatByAccount\OneAccount.cshtml" />
     <Content Include="Views\StatByRegion\OneRegion.cshtml" />
+    <Content Include="Views\IPScan\Index.cshtml" />
+    <Content Include="Views\CIDRSetting\Index.cshtml" />
+    <Content Include="Views\CIDRSetting\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IPDetectServer.Business\IPDetectServer.Business.csproj">

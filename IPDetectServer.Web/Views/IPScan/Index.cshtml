@@ -1,0 +1,141 @@
+﻿@model IPDetectServer.Web.ViewModels.IPScanQueryViewModel
+@using IPDetectServer.Web.Models
+@{
+    
+    var strValidationSummary = string.Empty;
+    var validationSummary = Html.ValidationSummary("", new { @class = "nolist" });
+    if (validationSummary != null)
+    {
+        strValidationSummary = validationSummary.ToString();
+    }
+}
+<script src="~/Scripts/mobile/grid.js" type="text/javascript">
+    function openwin(url) {
+        // window.showModalDialog(url, 'logDetail', 'dialogWidth=750px,dialogHeight=650px, toolbar=no, menubar=no, scrollbars=yes,resizable=yes, status=no,center=yes');
+        //window.showModelessDialog(url, 'Log Detail', 'dialogWidth=700px;dialogHeight=600px;');
+        window.open(url, 'Detail', "width=750,height=600,toolbar=no, menubar=no, resizable=yes,status=no,center=yes");
+
+    }
+
+    $(function () {
+        $("#StartDate").datepicker({
+            gotoCurrent: true,
+            showButtonPanel: true,
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "yy-mm-dd",
+            numberOfMonths: 1,
+            constrainInputType: false,
+            onSelect: function (selectedDate) {
+                $("#StartDate").datepicker("option", "minDate", selectedDate);
+            }
+        });
+        $("#SearchConditions_EndDate_").datepicker({
+            gotoCurrent: true,
+            showButtonPanel: true,
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "yy-mm-dd",
+            numberOfMonths: 1,
+            constrainInputType: false,
+            onSelect: function (selectedDate) {
+                $("#SearchConditions_EndDate_").datepicker("option", "maxDate", selectedDate);
+            }
+        });
+    });
+</script>
+@using (@Html.BeginForm())
+{
+    <div class="content-grid">
+        @Html.Hidden("_ViewState", (string)ViewBag.ViewState)
+        <div class="content-title">
+            &nbsp;扫描查询
+        </div>
+        <div class="list-error-message">
+            @Html.Raw(strValidationSummary)
+        </div>
+        <hr class="mobile-form-content-splitor" />
+        <div style="height: 28px; line-height: 28px">
+            <div class="same_line" style="width: 60px;">
+                &nbsp;&nbsp;查询时间：</div>
+            <div class="same_line" style="width: 80px;">@Html.TextBoxFor(m => m.SearchConditions["StartDate"], new { @class = "mobile-form-text-box" })</div>
+            <div class="same_line" style="width: 15px;">
+                至</div>
+            <div class="same_line" style="width: 80px">@Html.TextBoxFor(m => m.SearchConditions["EndDate"], new { @class = "mobile-form-text-box" })</div>
+                        <div class="same_line">
+                &nbsp;&nbsp;TCP验证结果：</div>
+            <div class="same_line">@Html.DropDownListFor(m => m.TCPStatus, Model.GetStatusList(), new { @class = "dropdownlist" })</div>
+                        <div class="same_line">
+                &nbsp;&nbsp;TTL验证结果：</div>
+            <div class="same_line">@Html.DropDownListFor(m => m.TTLStatus, Model.GetStatusList(), new { @class = "dropdownlist" })</div>
+            
+            <div class="same_line">
+                &nbsp;&nbsp;<input type="submit" value="查  询" name="btnIPScanResultQuery" class="button_search" /></div>
+        </div>
+        <div style="height: 5px; line-height: 5px">
+            &nbsp;</div>
+        <input type="submit" id="btnSortInGrid" name="btnSortInGrid" style="display: none" />
+        @Html.Hidden("hidSortFieldName", Request["hidSortFieldName"])
+        @Html.Hidden("hidSortFieldOrderBy", Request["hidSortFieldOrderBy"])
+        @Html.Hidden("hidGridSelectedIds", Request["hidGridSelectedIds"])
+        @Html.HiddenFor(m => m.TotalRows)
+        <table class="mobile-grid-tb-list">
+            <tr>
+                <th  style="min-width: 100px; max-width: 120px;">
+                    IP地址
+                </th>
+                <th style="min-width: 120px; max-width: 120px;">
+                    TCP连接时间(ms)
+                </th>
+                <th style="min-width: 120px; max-width: 120px">
+                    TCP验证结果
+                </th>
+                <th style="min-width: 120px; max-width: 120px">
+                    TTL验证结果
+                </th>
+             
+                <th style="min-width: 120px; max-width:120px">
+                    扫描时间
+                </th>
+            </tr>
+            @{if (Model != null && Model.DataList != null)
+              {
+                  int index = 0;
+                  string className = "";
+                  foreach (var item in Model.DataList)
+                  {
+                      if (index == Model.DataList.Count() - 1)
+                      {
+                          className = "last-row";
+                      }
+                <tr class="@className">
+                    <td class="grid-limit" style="word-wrap: break-word; word-break: break-all; width: 120px">@item.IP
+                    </td>
+                    <td class="grid-limit" style="word-wrap: break-word; word-break: break-all; width: 1200px;">@item.TCPResponseTime
+                    </td>
+                    <td class="grid-limit" style="word-wrap: break-word; word-break: break-all; min-width: 120px;
+                        max-width: 120px">@item.TCPValidationResult
+                    </td>
+                    <td class="grid-limit" style="word-wrap: break-word; word-break: break-all; min-width: 120px;
+                        max-width: 120px">@item.TTLValidationResult
+                    </td>
+                    <td class="grid-limit" style="word-wrap: break-word; word-break: break-all; min-width: 120px;
+                        max-width: 120px">@item.CreatedDate.ToString("yyyy-MM-dd HH:mm:ss")
+                    </td>
+                
+                </tr>
+                          index++;
+                  }
+              }
+            }
+            @if (Model.TotalRows > 0)
+            {
+                <tr class="pagination-row">
+                    <td colspan="11" style="text-align: right;">
+                        <div style="text-align: right">@IPDetectServer.Web.ControlHelper.PagingControl("btnPageNavigate", Model.TotalRows, Model.PageIndex, Model.PageSize)</div>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+}

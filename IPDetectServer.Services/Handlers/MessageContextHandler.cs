@@ -96,7 +96,11 @@ namespace IPDetectServer.Lib.APIHandlers
                             watch.Stop();
                             int requestExcuteTime = Convert.ToInt32(watch.ElapsedMilliseconds);
                             watch = null;
-                            requestContent.Append("\r\n\tResponse : ").Append(responseMessage.Result);
+                            requestContent.Append("\r\n\tResponse : ");
+                            if (responseMessage != null)
+                            {
+                                requestContent.Append(responseMessage.Result);
+                            }
                             requestContent.Append("\r\n\tCost(ms) : ").Append(requestExcuteTime);
                             
                             Log.Info(requestContent.ToString());
