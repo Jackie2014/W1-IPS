@@ -74,7 +74,7 @@ function update(token)
     var valid = verifyRequiredFields();
     if (valid) {
         var settingId = document.getElementById("ID").value;
-        var url = '/apis/v1/cidrsettings/' +settingId + '/update';
+        var url = '@Url.Content("~/apis/v1/cidrsettings/")' +settingId + '/update';
 
         var ipStart = document.getElementById("IPStart").value;
         var ipEnd = document.getElementById("IPEnd").value;
@@ -117,7 +117,7 @@ function update(token)
 function deleteRow(token)
 { 
     var id = $("#hidSeletedSettingRow").val();
-    var url = '/apis/v1/cidrsettings/' + id;
+    var url ='@Url.Content("~/apis/v1/cidrsettings/")'+ id;
     $.ajax({
         type: 'DELETE',
         beforeSend: function (request) {
@@ -148,7 +148,7 @@ function deleteRow(token)
     <div class="content-grid">
         @Html.Hidden("_ViewState", (string)ViewBag.ViewState)
         <div class="content-title">
-            &nbsp;地址段维护&nbsp;&nbsp;&nbsp;&nbsp;==><a href="/cidrsetting/new">新增</a>
+            &nbsp;地址段维护&nbsp;&nbsp;&nbsp;&nbsp;==><a href='@Url.Content("~/cidrsetting/new")'>新增</a>
         </div>
         <input type="submit" id="btnSortInGrid" name="btnSortInGrid" style="display: none" />
         @Html.Hidden("hidSortFieldName", Request["hidSortFieldName"])

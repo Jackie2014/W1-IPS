@@ -96,7 +96,7 @@ function changePassword(token)
     var valid = verifyRequiredFieldsForPassword();
     if (valid) {
         var userid = document.getElementById("LoginNameForPassword").value;
-        var url = '/apis/v1/users/' + userid + '/changepassword';
+        var url = '@Url.Content("~/apis/v1/users/")' + userid + '/changepassword';
         var password1 = document.getElementById("NewPassword1").value;
         var data = '{"NewPassword":"' + password1 + '"}';
         $.ajax({
@@ -131,7 +131,7 @@ function update(token)
     var valid = verifyRequiredFields();
     if (valid) {
         var userid = document.getElementById("SelectedLoginName").value;
-        var url = '/apis/v1/users/' + userid + '/update';
+        var url = '@Url.Content("~/apis/v1/users/")' + userid + '/update';
         var fullName = document.getElementById("EditName").value;
         var city = document.getElementById("EditCity").value;
         var phone = document.getElementById("EditPhone").value;
@@ -170,7 +170,7 @@ function update(token)
 function deleteRow(token)
 { 
     var userid = $("#hidSelectedUserRow").val();
-    var url = '/apis/v1/users/' + userid;
+    var url = '@Url.Content("~/apis/v1/users/")' + userid;
     $.ajax({
         type: 'DELETE',
         beforeSend: function (request) {

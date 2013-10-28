@@ -33,7 +33,7 @@ namespace IPDetectServer.Web.Controllers
         private IPScanQueryViewModel InitilizeModel()
         {
             IPScanQueryViewModel model = new IPScanQueryViewModel();
-            model.SearchConditions["StartDate"] = DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd");
+            model.SearchConditions["StartDate"] = DateTime.Now.ToString("yyyy-MM-dd");
             model.SearchConditions["EndDate"] = DateTime.Now.ToString("yyyy-MM-dd");
             return model;
         }

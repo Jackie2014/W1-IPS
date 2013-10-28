@@ -84,5 +84,23 @@ namespace IPDetectServer.Services.V1
             var result = rep.GetSettings(0, 10000);
             return result;
         }
+
+        [POST("scanresults")]
+        public void UploadScanResults(List<IPScanResult> results)
+        {
+            if (results == null || results.Count == 0)
+            {
+                throw new BadRequestException("上传的IP扫描结果不能为空。");
+            }
+
+            foreach (var item in results)
+            {
+                item.CreatedBy = Context.LoginName;
+                item.LastUpdatedBy = item.CreatedBy;
+            }
+
+            IPScanResultRepository rep = new IPScanResultRepository();
+            rep.AddIPScanResults(results);
+        }
     }
 }
