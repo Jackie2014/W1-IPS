@@ -17,12 +17,12 @@ namespace IPDetectServer.Web.Controllers
             return View(model);
         }
 
-        public ActionResult Manage()
-        {
-            CIDRManageViewModel model = new CIDRManageViewModel();
-            model.QueryData();
-            return View("Manage", model);
-        }
+        //public ActionResult Manage()
+        //{
+        //    CIDRManageViewModel model = new CIDRManageViewModel();
+        //    model.QueryData();
+        //    return View("Manage", model);
+        //}
 
         public ActionResult Edit()
         {
@@ -33,8 +33,8 @@ namespace IPDetectServer.Web.Controllers
         private IPScanQueryViewModel InitilizeModel()
         {
             IPScanQueryViewModel model = new IPScanQueryViewModel();
-            model.SearchConditions["StartDate"] = DateTime.Now.ToString("yyyy-MM-dd");
-            model.SearchConditions["EndDate"] = DateTime.Now.ToString("yyyy-MM-dd");
+            model.SearchConditions["StartDate"] = DateTime.Now.AddMinutes(-5).ToString("yyyy-MM-dd HH:mm");
+            model.SearchConditions["EndDate"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
             return model;
         }
 

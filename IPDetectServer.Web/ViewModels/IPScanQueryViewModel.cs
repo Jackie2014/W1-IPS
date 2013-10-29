@@ -22,12 +22,12 @@ namespace IPDetectServer.Web.ViewModels
                 }
                 else
                 {
-                    DateTime result = Constants.MinDate;
+                    DateTime result = DateTime.Now.AddMinutes(-5);
                     bool isSuccess = DateTime.TryParse(this.SearchConditions["StartDate"], out result);
                     if (!isSuccess)
                     {
                         result = Constants.MinDate;
-                        this.SearchConditions["StartDate"] = result.ToString("yyyy-MM-dd");
+                        this.SearchConditions["StartDate"] = result.ToString("yyyy-MM-dd HH:mm");
                     }
                     return result;
                 }
@@ -49,11 +49,17 @@ namespace IPDetectServer.Web.ViewModels
                     if (!isSuccess)
                     {
                         result = DateTime.Now;
-                        this.SearchConditions["EndDate"] = result.ToString("yyyy-MM-dd");
+                        this.SearchConditions["EndDate"] = result.ToString("yyyy-MM-dd HH:mm");
                     }
                     return result;
                 }
             }
+        }
+
+        public string IP
+        {
+            get;
+            set;
         }
 
         public string TCPStatus

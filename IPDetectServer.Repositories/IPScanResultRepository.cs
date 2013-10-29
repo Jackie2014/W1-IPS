@@ -48,7 +48,7 @@ namespace IPDetectServer.Repositories
                        (String.IsNullOrEmpty(tcpStatus) ? true : t.TCPValidation.Equals(tcpStatus, StringComparison.OrdinalIgnoreCase))
                     && (String.IsNullOrEmpty(ttlStatus) ? true : t.TTLValidation.Equals(ttlStatus, StringComparison.OrdinalIgnoreCase))
                     && (t.CreatedDate >= start && t.CreatedDate <= end))
-                        .OrderBy(t => t.IP).Skip(pageIndex * pageSize).Take(pageSize).ToList();
+                        .OrderBy(t => t.CreatedDate).Skip(pageIndex * pageSize).Take(pageSize).ToList();
             }
 
             foreach (var r in dbResult)

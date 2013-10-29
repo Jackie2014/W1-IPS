@@ -58,11 +58,14 @@
         <div style="height: 28px; line-height: 28px">
             <div class="same_line" style="width: 60px;">
                 &nbsp;&nbsp;查询时间：</div>
-            <div class="same_line" style="width: 80px;">@Html.TextBoxFor(m => m.SearchConditions["StartDate"], new { @class = "mobile-form-text-box" })</div>
+            <div class="same_line" style="width: 120px;">@Html.TextBoxFor(m => m.SearchConditions["StartDate"], new { @class = "mobile-form-text-box", style = "width:110px;" })</div>
             <div class="same_line" style="width: 15px;">
                 至</div>
-            <div class="same_line" style="width: 80px">@Html.TextBoxFor(m => m.SearchConditions["EndDate"], new { @class = "mobile-form-text-box" })</div>
-                        <div class="same_line">
+            <div class="same_line" style="width: 120px">@Html.TextBoxFor(m => m.SearchConditions["EndDate"], new { @class = "mobile-form-text-box", style = "width:110px;" })</div>
+                       <div class="same_line">
+                &nbsp;&nbsp;IP地址：</div>
+            <div class="same_line">@Html.TextBoxFor(m => m.TCPOk, new { @class = "mobile-form-text-box" })</div>
+              <div class="same_line">
                 &nbsp;&nbsp;TCP验证结果：</div>
             <div class="same_line">@Html.DropDownListFor(m => m.TCPStatus, Model.GetStatusList(), new { @class = "dropdownlist" })</div>
                         <div class="same_line">

@@ -378,7 +378,12 @@ td.edit-table-left {
     height:20px;
     line-height:20px;
 }
-
+.mobile-form-text-box2
+{
+    width: 110px;
+    height:20px;
+    line-height:20px;
+}
 .mobile-grid-tb-list td
 {    
     border:dotted 1px #ccc;
