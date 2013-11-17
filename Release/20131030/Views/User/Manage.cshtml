@@ -1,0 +1,423 @@
+﻿@model IPDetectServer.Web.Models.UserListViewModel
+@using IPDetectServer.Web;
+@{
+    ViewBag.Title = "管理用户";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var strValidationSummary = string.Empty;
+    var validationSummary = Html.ValidationSummary("", new { @class = "nolist" });
+    if (validationSummary != null)
+    {
+        strValidationSummary = validationSummary.ToString();
+    }
+}
+@*<script src="~/Scripts/mobile/grid.js" type="text/javascript">*@
+<script type="text/javascript">
+var currentEditTR;
+function showEditWindow(obj, loginName, fullName, city, phone, desc) {
+    currentEditTR = $(obj).parent().parent();
+    var popupDiv = document.getElementById("edit_user_window");
+    popupDiv.style.visibility = "visible";
+    popupDiv.style.display = 'block';
+    $("#lblEditUserResult").html("");
+        
+    document.getElementById("SelectedLoginName").value = loginName;
+    document.getElementById("EditName").value = fullName;
+    document.getElementById("EditCity").value = city;
+    document.getElementById("EditPhone").value = phone;
+    document.getElementById("EditDescription").value = desc;
+}
+
+function hideEditWindow() {
+    var popupDiv = document.getElementById("edit_user_window");
+    popupDiv.style.visibility = "hidden";
+    popupDiv.style.display = 'none';
+}
+
+function showDeleteConfirmWindow(obj) {
+    $("#hidSelectedUserRow").val($(obj).parent().parent().find('td:eq(1)').text());
+    currentEditTR = $(obj).parent().parent();
+    var popupDiv = document.getElementById("delete_confirm_window");
+    popupDiv.style.visibility = "visible";
+    popupDiv.style.display = 'block';
+}
+
+function hideDeleteConfirmWindow() {
+    var popupDiv = document.getElementById("delete_confirm_window");
+    popupDiv.style.visibility = "hidden";
+    popupDiv.style.display = 'none';
+}
+
+function showChangePasswordWindow(loginName) {
+    var popupDiv = document.getElementById("change_userpassword_window");
+    popupDiv.style.visibility = "visible";
+    popupDiv.style.display = 'block';
+    $("#lblChangePasswordResult").html("");
+
+    document.getElementById("LoginNameForPassword").value = loginName;
+    document.getElementById("NewPassword1").value = "";
+    document.getElementById("NewPassword2").value = "";
+}
+
+function hideChangePasswordWindow() {
+    var popupDiv = document.getElementById("change_userpassword_window");
+    popupDiv.style.visibility = "hidden";
+    popupDiv.style.display = 'none';
+}
+
+function verifyRequiredFields()
+{
+    if (!document.getElementById("EditName").value || !document.getElementById("EditCity").value) {
+        alert("真实姓名和城市不能为空。");
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
+function verifyRequiredFieldsForPassword() {
+    var password1 = document.getElementById("NewPassword1").value;
+    var password2 = document.getElementById("NewPassword2").value;
+    if (!password1 || !password2) {
+        alert("新密码和确认密码不能为空。");
+        return false;
+    }
+    else if (!(password1 == password2)) {
+        alert("新密码和确认密码输入不一致，请重新输入。");
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
+function changePassword(token) 
+{
+    var valid = verifyRequiredFieldsForPassword();
+    if (valid) {
+        var userid = document.getElementById("LoginNameForPassword").value;
+        var url = '@Url.Content("~/apis/v1/users/")' + userid + '/changepassword';
+        var password1 = document.getElementById("NewPassword1").value;
+        var data = '{"NewPassword":"' + password1 + '"}';
+        $.ajax({
+            type: 'POST',
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", token);
+            },
+            url: url,
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function (result) {
+                if(result.IsSuccess)
+                {
+                    $("#lblChangePasswordResult").html("密码修改成功。");
+                }
+                else{
+                    $("#lblChangePasswordResult").html("密码修改失败:" + result.Message);
+                }
+                    
+            },
+            error: function(result) {
+                alert(result.status + result.responseText);
+                $("#lblChangePasswordResult").html("发生未知的错误:" + result.status);
+            },
+        });
+    }
+};
+
+function update(token) 
+{                  
+    var valid = verifyRequiredFields();
+    if (valid) {
+        var userid = document.getElementById("SelectedLoginName").value;
+        var url = '@Url.Content("~/apis/v1/users/")' + userid + '/update';
+        var fullName = document.getElementById("EditName").value;
+        var city = document.getElementById("EditCity").value;
+        var phone = document.getElementById("EditPhone").value;
+        var description = document.getElementById("EditDescription").value;
+        var data = '{"Name":"' + fullName + '","City":"' + city + '","Phone":"' + phone + '","Description":"' + description + '"}';
+        $.ajax({
+            type: 'POST',
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", token);
+            },
+            url: url,
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function (result) {
+                if(result.IsSuccess)
+                {
+                    $("#lblEditUserResult").html("用户资料修改成功。");
+                    currentEditTR.find('td:eq(2)').html(fullName);
+                    currentEditTR.find('td:eq(3)').html(city);
+                    currentEditTR.find('td:eq(4)').html(phone);
+                }
+                else{
+                    $("#lblEditUserResult").html("用户资料修改失败:" + result.Message);
+                }    
+            },
+            error: function(result) {
+                alert(result.status + result.responseText);
+
+                $("#lblEditUserResult").html("发生未知的错误:" + result.status);
+            },
+        });
+    }
+};
+
+function deleteRow(token)
+{ 
+    var userid = $("#hidSelectedUserRow").val();
+    var url = '@Url.Content("~/apis/v1/users/")' + userid;
+    $.ajax({
+        type: 'DELETE',
+        beforeSend: function (request) {
+            request.setRequestHeader("Authorization", token);
+        },
+        url: url,
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        success: function (result) {
+            if(result.IsSuccess)
+            {
+                currentEditTR.remove();
+                hideDeleteConfirmWindow();
+                //$("#TotalRows").val($("#TotalRows").val() - 1);
+            }
+            else{alert("error");
+                alert(result.Message);
+            }    
+        },
+        error: function(result) {
+            alert(result.status + result.responseText);
+            alert("发生未知的错误:" + result.status);
+        },
+    });
+}
+</script>
+@using (@Html.BeginForm())
+{
+    <div class="content-grid">
+        @Html.Hidden("_ViewState", (string)ViewBag.ViewState)
+        <div class="content-title">
+            &nbsp;管理用户
+        </div>
+        <input type="submit" id="btnSortInGrid" name="btnSortInGrid" style="display: none" />
+        @Html.Hidden("hidSortFieldName", Request["hidSortFieldName"])
+        @Html.Hidden("hidSortFieldOrderBy", Request["hidSortFieldOrderBy"])
+        @Html.Hidden("hidGridSelectedIds", Request["hidGridSelectedIds"])
+        @Html.Hidden("hidSelectedUserRow")
+        @Html.HiddenFor(m => m.TotalRows)
+        <table class="mobile-grid-tb-list">
+            <tr>
+                <th class="center" style="width: 30px;">
+                    序号
+                </th>
+                <th class="center" style="min-width: 80px; max-width: 150px;">
+                    登录账号
+                </th>
+                <th class="center" style="width: 100px">
+                    真实姓名
+                </th>
+                <th class="center" style="min-width: 60px; max-width: 150px;">
+                    地市
+                </th>
+                <th class="center" style="width: 120px">
+                    联系电话
+                </th>
+                <th class="center" style="width: 160px">
+                    创建日期
+                </th>
+                <th class="center" style="width: 160px">
+                    最近登录
+                </th>
+                <th class="center" style="width: 80px;">
+                    修改密码
+                </th>
+                <th class="center" style="width: 60px;">
+                    编辑用户
+                </th>
+                <th class="center" style="width: 60px;">
+                    删除用户
+                </th>
+            </tr>
+            @{if (Model != null && Model.DataList != null)
+              {
+                  int index = 0;
+                  string className = "";
+                  foreach (var item in Model.DataList)
+                  {
+                      if (index == Model.DataList.Count() - 1)
+                      {
+                          className = "last-row";
+                      }
+                <tr class="@className">
+                    <td class="grid-limit" style="width: 30px; text-align: center;">@item.SeqNo
+                    </td>
+                    <td class="grid-limit" style="min-width: 80px; max-width: 150px; text-align: center;">@item.LoginName
+                    </td>
+                    <td class="grid-limit" style="width: 100px; text-align: center;">@item.Name
+                    </td>
+                    <td class="grid-limit" style="min-width: 60px; max-width: 150px; text-align: center;">@item.City
+                    </td>
+                    <td class="grid-limit" style="width: 100px; text-align: center;">@item.Phone
+                    </td>
+                    <td class="grid-limit" style="width: 160px; text-align: center;">@item.CreatedDate.ToString("yyyy-MM-dd HH:mm:ss")
+                    </td>
+                    <td class="grid-limit" style="width: 160px; text-align: center;">@item.LastLoginDate.ToString("yyyy-MM-dd HH:mm:ss")
+                    </td>
+                    <td class="grid-limit" style="width: 80px; text-align: center;">
+                    @{if(@item.LoginName != "administrator")
+                    {
+                        <a href="#" onclick="showChangePasswordWindow('@item.LoginName')">[修改密码]</a>
+                    }}
+                    </td>
+                    <td class="grid-limit" style="width: 60px; text-align: center;">
+                    @{if(@item.LoginName != "administrator")
+                    {
+                        <a href="#" onclick="showEditWindow(this,'@item.LoginName','@item.Name','@item.City', '@item.Phone','@item.Description');return false;">
+                            [编辑]</a>
+                    }}
+                    </td>
+                    <td class="grid-limit" style="width: 60px; text-align: center;">
+                    @{if(@item.LoginName != SessionManager.User.LoginName && @item.LoginName != "administrator")
+                    {
+                        <a href="#" onclick="showDeleteConfirmWindow(this);return false;">[删除]</a>
+                    }}
+                    </td>
+                </tr>
+                      index++;
+                  }
+              }
+            }
+            @if (Model.TotalRows > 0)
+            {
+                <tr class="pagination-row">
+                    <td colspan="10" style="text-align: right;">
+                        <div style="text-align: right">@IPDetectServer.Web.ControlHelper.PagingControl("btnPageNavigate", Model.TotalRows, Model.PageIndex, Model.PageSize)</div>
+                    </td>
+                </tr>
+            }
+        </table>
+        <div id="edit_user_window" class="popup">
+            <div class="content-title-pop">
+                &nbsp;编辑用户
+                <img src="~/Content/themes/default/images/close.png" alt="关闭" onclick="hideEditWindow()"
+                    style="text-align: right; margin: 0 0 0 260px" />
+            </div>
+            <br />
+            <div>
+                <div class="group-in-a-line-pop">
+                    <div class="same_line" style="width: 80px;">
+                        &nbsp;&nbsp;用户账号：</div>
+                    <div class="same_line" style="width: 160px;">@Html.TextBoxFor(m => m.SelectedLoginName, new { @maxlength = "50", style = "width:153px;border: none;background-color:#E6E6E6;border-bottom-color:#E6E6E6;", @readonly = "readonly" })</div>
+                </div>
+                <div class="group-in-a-line-pop">
+                    <div class="same_line" style="width: 80px;">
+                        &nbsp;&nbsp;真实姓名：</div>
+                    <div class="same_line" style="width: 160px;">
+                        @Html.TextBoxFor(m => m.EditName, new { @maxlength = "50", style = "width:150px" })
+                    </div>
+                    <div class="same_line" style="width: 10px; color: Red">
+                        *</div>
+                </div>
+                <div class="group-in-a-line-pop">
+                    <div class="same_line" style="width: 80px;">
+                        &nbsp;&nbsp;城&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;市：</div>
+                    <div class="same_line" style="width: 160px;">
+                        @Html.TextBoxFor(m => m.EditCity, new { @maxlength = "50", style = "width:150px" })
+                    </div>
+                    <div class="same_line" style="width: 10px; color: Red">
+                        *</div>
+                </div>
+                <div class="group-in-a-line-pop">
+                    <div class="same_line" style="width: 80px;">
+                        &nbsp;&nbsp;联系电话：</div>
+                    <div class="same_line" style="width: 160px;">
+                        @Html.TextBoxFor(m => m.EditPhone, new { @maxlength = "50", style = "width:150px" })
+                    </div>
+                </div>
+                <div class="group-in-a-line-pop">
+                    <div class="same_line" style="width: 80px;">
+                        &nbsp;&nbsp;备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</div>
+                    <div class="same_line" style="width: 160px;">
+                        @Html.TextBoxFor(m => m.EditDescription, new { @maxlength = "50", style = "width:150px" })
+                    </div>
+                </div>
+                <div style="text-align: center">
+                    <br />
+                    <input type="button" value="确认修改" onclick="update('@SessionManager.User.Token');return false;"
+                        class="button_submit_normal" />
+                    @Html.Raw("&nbsp;&nbsp;&nbsp;")
+                    <input type="button" value="关&nbsp;&nbsp;&nbsp;&nbsp;闭" onclick="hideEditWindow();return false;"
+                        class="button_reset_normal" />
+                </div>
+                <div class="group-in-a-line-pop">
+                    <div id="lblEditUserResult" class="error-message"></div>
+                </div>
+            </div>
+        </div>
+        
+           <div id="change_userpassword_window" class="popup" style="height:250px;">
+            <div class="content-title-pop">
+                 &nbsp;&nbsp;修改密码
+                <img src="~/Content/themes/default/images/close.png" alt="关闭" onclick="hideChangePasswordWindow()"
+                    style="text-align: right; margin: 0 0 0 260px" />
+            </div>
+            <br />
+            <div>
+                <div class="group-in-a-line-pop">
+                    <div class="same_line" style="width:80px;">&nbsp;&nbsp;用户账号：&nbsp;&nbsp;</div>
+                    <div class="same_line" style="width:160px;">@Html.TextBox("LoginNameForPassword", "", new { @maxlength = "50", style = "width:153px;border: none;background-color:#E6E6E6;border-bottom-color:#E6E6E6;", @readonly = "readonly" })</div>
+                </div>
+                 <div class="group-in-a-line-pop">
+                    <div class="same_line" style="width:80px;text-align:right;">&nbsp;&nbsp;新密码：&nbsp;&nbsp;</div>
+                    <div class="same_line" style="width:160px;">@Html.Password("NewPassword1", "", new { @maxlength = "50", style = "width:150px" })</div>
+                    <div class="same_line" style="width:10px;color:Red">*</div>
+                </div>
+                <div class="group-in-a-line-pop">
+                    <div class="same_line" style="width:80px;text-align:right;">&nbsp;&nbsp;确认密码：&nbsp;&nbsp;</div>
+                    <div class="same_line" style="width:160px;">@Html.Password("NewPassword2", "", new { @maxlength = "50", style = "width:150px" })</div>
+                    <div class="same_line" style="width:10px;color:Red">*</div>
+                </div>
+                <div style="text-align: center">
+                    <br />
+                    <input type="submit" value="确认修改" onclick="changePassword('@SessionManager.User.Token');return false;"
+                        class="button_submit_normal" />
+                    @Html.Raw("&nbsp;&nbsp;&nbsp;")
+                    <input type="button" value="关&nbsp;&nbsp;&nbsp;&nbsp;闭" onclick="hideChangePasswordWindow();return false;"
+                        class="button_reset_normal" />
+                </div>
+                <div class="group-in-a-line-pop">
+                    <div id="lblChangePasswordResult" class="error-message"></div>
+                </div>
+            </div>
+        </div>
+
+         <div id="delete_confirm_window" class="popup-confirm">
+            <div class="content-title-pop">
+                 &nbsp;&nbsp;删除提示
+                <img src="~/content/themes/default/images/close.png" alt="关闭" onclick="hideDeleteConfirmWindow()"
+                    style="text-align: right; margin: 0 0 0 155px" />
+            </div>
+            <br />
+            <div style="text-align: center;margin:20px 0 20px 0">确定要删除该用户吗？</div>
+            <div>
+                <div style="text-align: center">
+                    <br />
+                    <input type="submit" value="确&nbsp;&nbsp;定" onclick="deleteRow('@SessionManager.User.Token');return false;"
+                        class="button_submit_normal" />
+                    @Html.Raw("&nbsp;&nbsp;&nbsp;&nbsp;")
+                    <input type="button" value="取&nbsp;&nbsp;消" onclick="hideDeleteConfirmWindow();return false;"
+                        class="button_reset_normal" />
+                </div>
+            </div>
+        </div>
+
+        <div class="list-error-message">
+             @Html.Raw(strValidationSummary)
+        </div>
+    </div>
+}

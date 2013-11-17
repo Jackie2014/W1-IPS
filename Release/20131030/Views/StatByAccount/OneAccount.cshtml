@@ -1,0 +1,121 @@
+﻿@model IPDetectServer.Web.Models.IPQueryModel
+@using IPDetectServer.Web.Models
+@{
+    ViewBag.Title = "账号统计";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var strValidationSummary = string.Empty;
+    var validationSummary = Html.ValidationSummary("", new { @class = "nolist" });
+    if (validationSummary != null)
+    {
+        strValidationSummary = validationSummary.ToString();
+    }
+}
+@using (@Html.BeginForm())
+{
+    <div class="content-grid">
+        @Html.Hidden("_ViewState", (string)ViewBag.ViewState)
+        <div class="content-title">
+            &nbsp;账号：@Model.SelectedUserID
+        </div>
+        <div class="list-error-message">
+            @Html.Raw(strValidationSummary)
+        </div>
+
+        <div style="height: 5px; line-height: 5px">
+            &nbsp;</div>
+        <input type="submit" id="btnSortInGrid" name="btnSortInGrid" style="display: none" />
+        @Html.Hidden("hidUserID", Model.SelectedUserID)
+        @Html.Hidden("hidSortFieldName", Request["hidSortFieldName"])
+        @Html.Hidden("hidSortFieldOrderBy", Request["hidSortFieldOrderBy"])
+        @Html.Hidden("hidGridSelectedIds", Request["hidGridSelectedIds"])
+        @Html.HiddenFor(m => m.TotalRows)
+        <table class="mobile-grid-tb-list">
+            <tr>
+                <th class="center" style="min-width: 90px; max-width: 100px;">
+                    IP
+                </th>
+                <th style="min-width: 70px; max-width: 80px">
+                    宽带服务商
+                </th>
+                <th style="min-width: 70px; max-width: 80px">
+                    IP归属
+                </th>
+                <th style="min-width: 50px; max-width: 80px">
+                    &nbsp;&nbsp;IP省份
+                </th>
+                <th style="min-width: 50px; max-width: 80px">
+                    &nbsp;&nbsp;IP地市
+                </th>
+                <th class="center" style="min-width: 50px; max-width: 60px">
+                    结果
+                </th>
+                <th class="center" style="min-width: 50px; max-width: 70px">
+                    录入人
+                </th>
+                <th style="min-width: 150px; max-width: 230px">
+                    &nbsp;&nbsp;&nbsp;详细地址
+                </th>
+                <th class="center" style="min-width: 100px; max-width: 180px">
+                    时间
+                </th>
+            </tr>
+            @{if (Model != null && Model.DataList != null)
+              {
+                  int index = 0;
+                  string className = "";
+                  foreach (var item in Model.DataList)
+                  {
+                      if (index == Model.DataList.Count() - 1)
+                      {
+                          className = "last-row";
+                      }
+                <tr class="@className">
+                    <td class="grid-limit" style="word-wrap: break-word; word-break: break-all; min-width: 90px;
+                        max-width: 100px;">@item.ClientIP
+                    </td>
+                    <td class="grid-limit" style="word-wrap: break-word; word-break: break-all; min-width: 70px;
+                        max-width: 80px">@item.ExpectedISP
+                    </td>
+                    <td class="grid-limit" style="word-wrap: break-word; word-break: break-all; min-width: 70px;
+                        max-width: 80px">@item.RealISP
+                    </td>
+                    <td class="grid-limit" style="word-wrap: break-word; word-break: break-all; min-width: 50px;
+                        max-width: 80px">@item.ExpectedISPProvince
+                    </td>
+                    <td class="grid-limit" style="word-wrap: break-word; word-break: break-all; min-width: 50px;
+                        max-width: 80px">@item.ExpectedISPCity
+                    </td>
+                    <td class="grid-limit" style="min-width: 50px; max-width: 60px" align="center">
+                        @if (item.Status == IPDetectServer.Models.IPMonitorStatus.Exception)
+                        {
+                            <font color="red">@item.StatusForDisplay</font> 
+                        }
+                        else
+                        {
+                            @item.StatusForDisplay
+                        }
+                    </td>
+                    <td class="grid-limit" style="min-width: 50px; max-width: 70px" align="center">@item.ClientRecordor
+                    </td>
+                    <td class="grid-limit" style="word-wrap: break-word; word-break: break-all; min-width: 150px;
+                        max-width: 230px">@item.ClientDetailAddress
+                    </td>
+                    <td class="grid-limit" style="min-width: 110px; max-width: 180px" align="center">
+                        @{string date = item.CreatedDate == null ? "" : item.CreatedDate.Value.ToString("yyyy-MM-dd HH:mm:ss");}@date
+                    </td>
+                </tr>
+                          index++;
+                  }
+              }
+            }
+            @if (Model.TotalRows > 0)
+            {
+                <tr class="pagination-row">
+                    <td colspan="10" style="text-align: right;">
+                        <div style="text-align: right">@IPDetectServer.Web.ControlHelper.PagingControl("btnPageNavigate", Model.TotalRows, Model.PageIndex, Model.PageSize)</div>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+}

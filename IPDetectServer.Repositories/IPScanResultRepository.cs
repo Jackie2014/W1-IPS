@@ -38,7 +38,7 @@ namespace IPDetectServer.Repositories
             }
         }
 
-        public List<IPScanResult> QueryIPScanResults(DateTime start, DateTime end, string tcpStatus, string ttlStatus, int pageIndex = 0, int pageSize = 20)
+        public List<IPScanResult> QueryIPScanResults(DateTime start, DateTime end, string ip, string tcpStatus, string ttlStatus, int pageIndex = 0, int pageSize = 20)
         {
             List<IPScanResult> result = new List<IPScanResult>();
             List<ipscanresults> dbResult = null;
@@ -47,14 +47,17 @@ namespace IPDetectServer.Repositories
                 dbResult = dbContext.ipscanresults.Where(t =>
                        (String.IsNullOrEmpty(tcpStatus) ? true : t.TCPValidation.Equals(tcpStatus, StringComparison.OrdinalIgnoreCase))
                     && (String.IsNullOrEmpty(ttlStatus) ? true : t.TTLValidation.Equals(ttlStatus, StringComparison.OrdinalIgnoreCase))
+                    && (String.IsNullOrEmpty(ip) ? true : t.IP == ip)
                     && (t.CreatedDate >= start && t.CreatedDate <= end))
-                        .OrderBy(t => t.CreatedDate).Skip(pageIndex * pageSize).Take(pageSize).ToList();
+                        .OrderByDescending(t => t.CreatedDate).ThenBy(t=>t.IP)
+                        .Skip(pageIndex * pageSize).Take(pageSize).ToList();
             }
-
+            int index = pageIndex * pageSize;
             foreach (var r in dbResult)
             {
                 IPScanResult item = new IPScanResult
                 {
+                    Seq = ++index,
                     IP = r.IP,
                     CreatedDate = r.CreatedDate,
                     TCPResponseTime = r.TCPTime,
@@ -68,7 +71,7 @@ namespace IPDetectServer.Repositories
             return result;
         }
 
-        public int GetRowTotal(DateTime start, DateTime end, string tcpStatus, string ttlStatus)
+        public int GetRowTotal(DateTime start, DateTime end, string IP, string tcpStatus, string ttlStatus)
         {
             int count = 0;
             using (var dbContext = new DataEntities())
@@ -76,6 +79,7 @@ namespace IPDetectServer.Repositories
                 count = dbContext.ipscanresults.Where(t =>
                        (String.IsNullOrEmpty(tcpStatus) ? true : t.TCPValidation.Equals(tcpStatus, StringComparison.OrdinalIgnoreCase))
                     && (String.IsNullOrEmpty(ttlStatus) ? true : t.TTLValidation.Equals(ttlStatus, StringComparison.OrdinalIgnoreCase))
+                    && (String.IsNullOrEmpty(IP) ? true : t.IP == IP)
                     && (t.CreatedDate >= start && t.CreatedDate <= end))
                     .Count();
             }

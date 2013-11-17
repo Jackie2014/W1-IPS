@@ -9,6 +9,12 @@ namespace IPDetectServer.Models
     [DataContract(Name = "IPScanResult")]
     public class IPScanResult
     {
+        public int Seq
+        {
+            get;
+            set;
+        }
+
         [DataMember(Name = "IP")]
         public string IP
         {

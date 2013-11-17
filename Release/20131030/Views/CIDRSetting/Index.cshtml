@@ -1,0 +1,321 @@
+﻿@model IPDetectServer.Web.ViewModels.CIDRManageViewModel
+@using IPDetectServer.Web;
+@{
+    ViewBag.Title = "地址段维护";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var strValidationSummary = string.Empty;
+    var validationSummary = Html.ValidationSummary("", new { @class = "nolist" });
+    if (validationSummary != null)
+    {
+        strValidationSummary = validationSummary.ToString();
+    }
+}
+@*<script src="~/Scripts/mobile/grid.js" type="text/javascript">*@
+<script type="text/javascript">
+var currentEditTR;
+function showEditWindow(obj,settingId,ipStart,ipEnd, tcpPort,tcpFaZhi,ttlFaZhi) {
+    currentEditTR = $(obj).parent().parent();
+    var popupDiv = document.getElementById("edit_cidr_window");
+    popupDiv.style.visibility = "visible";
+    popupDiv.style.display = 'block';
+    $("#lblEditSettingResult").html("");
+    document.getElementById("ID").value = settingId;
+    document.getElementById("IPStart").value = ipStart;    
+    document.getElementById("IPEnd").value = ipEnd;
+    document.getElementById("TCPPort").value = tcpPort;
+    document.getElementById("TCPFaZhi").value = tcpFaZhi;
+    document.getElementById("TTLFaZhi").value = ttlFaZhi;
+}
+
+function hideEditWindow() {
+    var popupDiv = document.getElementById("edit_cidr_window");
+    popupDiv.style.visibility = "hidden";
+    popupDiv.style.display = 'none';
+}
+
+function showDeleteConfirmWindow(obj,id) {
+    $("#hidSeletedSettingRow").val(id);
+    currentEditTR = $(obj).parent().parent();
+    var popupDiv = document.getElementById("delete_confirm_window");
+    popupDiv.style.visibility = "visible";
+    popupDiv.style.display = 'block';
+}
+
+function hideDeleteConfirmWindow() {
+    var popupDiv = document.getElementById("delete_confirm_window");
+    popupDiv.style.visibility = "hidden";
+    popupDiv.style.display = 'none';
+}
+
+function verifyRequiredFields()
+{
+    if (!document.getElementById("IPStart").value 
+    || !document.getElementById("IPEnd").value
+    || !document.getElementById("TCPPort").value
+    || !document.getElementById("TCPFaZhi").value
+    || !document.getElementById("TTLFaZhi").value){
+        alert("带*的为必填字段。");
+        return false;
+    }
+    else if(isNaN(document.getElementById("TCPPort").value)
+    || isNaN(document.getElementById("TCPFaZhi").value)
+    || isNaN(document.getElementById("TTLFaZhi").value))
+    {
+        alert("TCP端口和阀值都必须是大于零的数字。");
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
+function update(token) 
+{                  
+    var valid = verifyRequiredFields();
+    if (valid) {
+        var settingId = document.getElementById("ID").value;
+        var url = '@Url.Content("~/apis/v1/cidrsettings/")' +settingId + '/update';
+
+        var ipStart = document.getElementById("IPStart").value;
+        var ipEnd = document.getElementById("IPEnd").value;
+        var tcpPort = document.getElementById("TCPPort").value;
+        var tcpFaZhi = document.getElementById("TCPFaZhi").value;
+        var ttlFaZhi = document.getElementById("TTLFaZhi").value;
+        var data = '{"IPStart":"' + ipStart + '","IPEnd":"' + ipEnd + '","TCPPort":' + tcpPort + ',"TCPFaZhi":' + tcpFaZhi + ',"TTLFaZhi":' + ttlFaZhi + '}';
+    
+        $.ajax({
+            type: 'POST',
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", token);
+            },
+            url: url,
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function (result) {
+                if(result.IsSuccess)
+                {
+                    $("#lblEditSettingResult").html("IP地址段修改成功。");
+                    currentEditTR.find('td:eq(0)').html(ipStart);
+                    currentEditTR.find('td:eq(1)').html(ipEnd);
+                    currentEditTR.find('td:eq(2)').html(tcpPort);
+                    currentEditTR.find('td:eq(3)').html(tcpFaZhi);
+                    currentEditTR.find('td:eq(4)').html(ttlFaZhi);
+                }
+                else{
+                    $("#lblEditSettingResult").html("IP地址段修改失败:" + result.Message);
+                }    
+            },
+            error: function(result) {
+                alert(result.status + result.responseText);
+               $("#lblEditSettingResult").html("发生未知的错误:" + result.status);
+            },
+        });
+    }
+};
+
+function deleteRow(token)
+{ 
+    var id = $("#hidSeletedSettingRow").val();
+    var url ='@Url.Content("~/apis/v1/cidrsettings/")'+ id;
+    $.ajax({
+        type: 'DELETE',
+        beforeSend: function (request) {
+            request.setRequestHeader("Authorization", token);
+        },
+        url: url,
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        success: function (result) {
+            if(result.IsSuccess)
+            {
+                currentEditTR.remove();
+                hideDeleteConfirmWindow();
+                $("#TotalRows").val($("#TotalRows").val() - 1);
+            }
+            else{
+                alert(result.Message);
+            }    
+        },
+        error: function(result) {
+            alert("发生未知的错误:" + result.status);
+        },
+    });
+}
+</script>
+@using (@Html.BeginForm())
+{
+    <div class="content-grid">
+        @Html.Hidden("_ViewState", (string)ViewBag.ViewState)
+        <div class="content-title">
+            &nbsp;地址段维护&nbsp;&nbsp;&nbsp;&nbsp;==><a href='@Url.Content("~/cidrsetting/new")'>新增</a>
+        </div>
+        <input type="submit" id="btnSortInGrid" name="btnSortInGrid" style="display: none" />
+        @Html.Hidden("hidSortFieldName", Request["hidSortFieldName"])
+        @Html.Hidden("hidSortFieldOrderBy", Request["hidSortFieldOrderBy"])
+        @Html.Hidden("hidGridSelectedIds", Request["hidGridSelectedIds"])
+        @Html.Hidden("hidSeletedSettingRow")
+        @Html.HiddenFor(m => m.TotalRows)
+        <table class="mobile-grid-tb-list">
+            <tr>
+                <th  style="min-width: 100px; max-width: 120px;">
+                    IP段开始地址
+                </th>
+                <th  style="min-width: 100px; max-width: 120px;">
+                    IP段结束地址
+                </th>
+                <th style="min-width: 120px; max-width: 120px;">
+                    TCP端口
+                </th>
+                <th style="min-width: 140px; max-width: 140px">
+                    TCP响应时间阀值(ms)
+                </th>
+                <th style="min-width: 120px; max-width: 120px">
+                    TTL阀值
+                </th>
+                <th style="min-width: 120px; max-width: 120px">
+                    创建时间
+                </th>
+                <th style="min-width: 120px; max-width: 120px">
+                    操作
+                </th>
+            </tr>
+            @{if (Model != null && Model.DataList != null)
+              {
+                  int index = 0;
+                  string className = "";
+                  foreach (var item in Model.DataList)
+                  {
+                      if (index == Model.DataList.Count() - 1)
+                      {
+                          className = "last-row";
+                      }
+                <tr class="@className">
+                    <td class="grid-limit" style="word-wrap: break-word; word-break: break-all; width: 120px">@item.IPStart
+                    </td>
+                    <td class="grid-limit" style="word-wrap: break-word; word-break: break-all; width: 120px;">@item.IPEnd
+                    </td>
+                    <td class="grid-limit" style="word-wrap: break-word; word-break: break-all; min-width: 120px;
+                        max-width: 120px">@item.TCPPort
+                    </td>
+                    <td class="grid-limit" style="word-wrap: break-word; word-break: break-all; min-width: 120px;
+                        max-width: 120px">@item.TCPFaZhi
+                    </td>
+                     <td class="grid-limit" style="word-wrap: break-word; word-break: break-all; min-width: 120px;
+                        max-width: 120px">@item.TTLFaZhi
+                    </td>
+                    <td class="grid-limit" style="word-wrap: break-word; word-break: break-all; min-width: 120px;
+                        max-width: 120px">@item.CreatedDate.ToString("yyyy-MM-dd")
+                    </td>
+
+                    <td class="grid-limit" style="width: 80px;">
+                        <a href="#" onclick="showEditWindow(this,'@item.ID','@item.IPStart','@item.IPEnd', '@item.TCPPort','@item.TCPFaZhi','@item.TTLFaZhi');return false;">
+                            编辑</a>&nbsp;&nbsp;
+                        <a href="#" onclick="showDeleteConfirmWindow(this,'@item.ID');return false;">删除</a>
+                    </td>
+                </tr>
+                      index++;
+                  }
+              }
+            }
+            @if (Model.TotalRows > 0)
+            {
+                <tr class="pagination-row">
+                    <td colspan="10" style="text-align: right;">
+                        <div style="text-align: right">@IPDetectServer.Web.ControlHelper.PagingControl("btnPageNavigate", Model.TotalRows, Model.PageIndex, Model.PageSize)</div>
+                    </td>
+                </tr>
+            }
+        </table>
+        <div id="edit_cidr_window" class="popup">
+            <div class="content-title-pop">
+                &nbsp;编辑设置
+                <img src="~/Content/themes/default/images/close.png" alt="关闭" onclick="hideEditWindow()"
+                    style="text-align: right; margin: 0 0 0 260px" />
+            </div>
+            <br />
+           @Html.HiddenFor(m => m.ID)
+            <div>
+                <div class="group-in-a-line-pop">
+                    <div class="same_line" style="width: 110px;">
+                        &nbsp;&nbsp;IP段开始地址：</div>
+                    <div class="same_line" style="width: 130px;">@Html.TextBoxFor(m => m.IPStart, new { @maxlength = "50", style = "width:150px" })</div>
+                    <div class="same_line" style="width: 10px; color: Red">
+                        *</div>
+                </div>
+                <div class="group-in-a-line-pop">
+                    <div class="same_line" style="width: 110px;">
+                        &nbsp;&nbsp;IP段结束地址：</div>
+                    <div class="same_line" style="width: 130px;">
+                        @Html.TextBoxFor(m => m.IPEnd, new { @maxlength = "50", style = "width:150px" })
+                    </div>
+                    <div class="same_line" style="width: 10px; color: Red">
+                        *</div>
+                </div>
+                <div class="group-in-a-line-pop">
+                    <div class="same_line" style="width: 110px;">
+                        &nbsp;&nbsp;TCP端口：</div>
+                    <div class="same_line" style="width: 130px;">
+                        @Html.TextBoxFor(m => m.TCPPort, new { @maxlength = "50", style = "width:150px" })
+                    </div>
+                    <div class="same_line" style="width: 10px; color: Red">
+                        *</div>
+                </div>
+                <div class="group-in-a-line-pop">
+                    <div class="same_line" style="width: 110px;">
+                        &nbsp;&nbsp;TCP响应时间阀值：</div>
+                    <div class="same_line" style="width: 130px;">
+                        @Html.TextBoxFor(m => m.TCPFaZhi, new { @maxlength = "50", style = "width:150px" })
+                    </div>
+                    <div class="same_line" style="width: 10px; color: Red">
+                        *</div>
+                </div>
+                <div class="group-in-a-line-pop">
+                    <div class="same_line" style="width: 110px;">
+                        &nbsp;&nbsp;TTL阀值：</div>
+                    <div class="same_line" style="width: 130px;">
+                        @Html.TextBoxFor(m => m.TTLFaZhi, new { @maxlength = "50", style = "width:150px" })
+                    </div>
+                    <div class="same_line" style="width: 10px; color: Red">
+                        *</div>
+                </div>
+                <div style="text-align: center">
+                    <br />
+                    <input type="button" value="确认修改" onclick="update('@SessionManager.User.Token');return false;"
+                        class="button_submit_normal" />
+                    @Html.Raw("&nbsp;&nbsp;&nbsp;")
+                    <input type="button" value="关&nbsp;&nbsp;&nbsp;&nbsp;闭" onclick="hideEditWindow();return false;"
+                        class="button_reset_normal" />
+                </div>
+                <div class="group-in-a-line-pop">
+                    <div id="lblEditSettingResult" class="error-message"></div>
+                </div>
+            </div>
+        </div>
+       
+
+         <div id="delete_confirm_window" class="popup-confirm">
+            <div class="content-title-pop">
+                 &nbsp;&nbsp;删除提示
+                <img src="~/content/themes/default/images/close.png" alt="关闭" onclick="hideDeleteConfirmWindow()"
+                    style="text-align: right; margin: 0 0 0 155px" />
+            </div>
+            <br />
+            <div style="text-align: center;margin:20px 0 20px 0">确定要删除该行数据吗？</div>
+            <div>
+                <div style="text-align: center">
+                    <br />
+                    <input type="submit" value="确&nbsp;&nbsp;定" onclick="deleteRow('@SessionManager.User.Token');return false;"
+                        class="button_submit_normal" />
+                    @Html.Raw("&nbsp;&nbsp;&nbsp;&nbsp;")
+                    <input type="button" value="取&nbsp;&nbsp;消" onclick="hideDeleteConfirmWindow();return false;"
+                        class="button_reset_normal" />
+                </div>
+            </div>
+        </div>
+
+        <div class="list-error-message">
+             @Html.Raw(strValidationSummary)
+        </div>
+    </div>
+}

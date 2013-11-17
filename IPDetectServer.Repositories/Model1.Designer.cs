@@ -196,18 +196,18 @@ namespace IPDetectServer.Repositories
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<cidrsettings> cidrsettings
+        public ObjectSet<cidrsetting> cidrsettings
         {
             get
             {
                 if ((_cidrsettings == null))
                 {
-                    _cidrsettings = base.CreateObjectSet<cidrsettings>("cidrsettings");
+                    _cidrsettings = base.CreateObjectSet<cidrsetting>("cidrsettings");
                 }
                 return _cidrsettings;
             }
         }
-        private ObjectSet<cidrsettings> _cidrsettings;
+        private ObjectSet<cidrsetting> _cidrsettings;
 
         #endregion
 
@@ -280,9 +280,9 @@ namespace IPDetectServer.Repositories
         /// <summary>
         /// 用于向 cidrsettings EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
-        public void AddTocidrsettings(cidrsettings cidrsettings)
+        public void AddTocidrsettings(cidrsetting cidrsetting)
         {
-            base.AddObject("cidrsettings", cidrsettings);
+            base.AddObject("cidrsettings", cidrsetting);
         }
 
         #endregion
@@ -296,15 +296,15 @@ namespace IPDetectServer.Repositories
     /// <summary>
     /// 没有元数据文档可用。
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="IPDetectServer.Repositories.dbModels", Name="cidrsettings")]
+    [EdmEntityTypeAttribute(NamespaceName="IPDetectServer.Repositories.dbModels", Name="cidrsetting")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
-    public partial class cidrsettings : EntityObject
+    public partial class cidrsetting : EntityObject
     {
         #region 工厂方法
     
         /// <summary>
-        /// 创建新的 cidrsettings 对象。
+        /// 创建新的 cidrsetting 对象。
         /// </summary>
         /// <param name="id">ID 属性的初始值。</param>
         /// <param name="iPStart">IPStart 属性的初始值。</param>
@@ -318,22 +318,22 @@ namespace IPDetectServer.Repositories
         /// <param name="createdDate">CreatedDate 属性的初始值。</param>
         /// <param name="lastUpdatedBy">LastUpdatedBy 属性的初始值。</param>
         /// <param name="lastUpdatedDate">LastUpdatedDate 属性的初始值。</param>
-        public static cidrsettings Createcidrsettings(global::System.String id, global::System.String iPStart, global::System.String iPEnd, global::System.Int32 iPStartNum, global::System.Int32 iPEndNum, global::System.Int32 tCPThreshold, global::System.Int32 tCPPort, global::System.Int32 tTLThreshold, global::System.String createdBy, global::System.DateTime createdDate, global::System.String lastUpdatedBy, global::System.DateTime lastUpdatedDate)
+        public static cidrsetting Createcidrsetting(global::System.String id, global::System.String iPStart, global::System.String iPEnd, global::System.Int32 iPStartNum, global::System.Int32 iPEndNum, global::System.Int32 tCPThreshold, global::System.Int32 tCPPort, global::System.Int32 tTLThreshold, global::System.String createdBy, global::System.DateTime createdDate, global::System.String lastUpdatedBy, global::System.DateTime lastUpdatedDate)
         {
-            cidrsettings cidrsettings = new cidrsettings();
-            cidrsettings.ID = id;
-            cidrsettings.IPStart = iPStart;
-            cidrsettings.IPEnd = iPEnd;
-            cidrsettings.IPStartNum = iPStartNum;
-            cidrsettings.IPEndNum = iPEndNum;
-            cidrsettings.TCPThreshold = tCPThreshold;
-            cidrsettings.TCPPort = tCPPort;
-            cidrsettings.TTLThreshold = tTLThreshold;
-            cidrsettings.CreatedBy = createdBy;
-            cidrsettings.CreatedDate = createdDate;
-            cidrsettings.LastUpdatedBy = lastUpdatedBy;
-            cidrsettings.LastUpdatedDate = lastUpdatedDate;
-            return cidrsettings;
+            cidrsetting cidrsetting = new cidrsetting();
+            cidrsetting.ID = id;
+            cidrsetting.IPStart = iPStart;
+            cidrsetting.IPEnd = iPEnd;
+            cidrsetting.IPStartNum = iPStartNum;
+            cidrsetting.IPEndNum = iPEndNum;
+            cidrsetting.TCPThreshold = tCPThreshold;
+            cidrsetting.TCPPort = tCPPort;
+            cidrsetting.TTLThreshold = tTLThreshold;
+            cidrsetting.CreatedBy = createdBy;
+            cidrsetting.CreatedDate = createdDate;
+            cidrsetting.LastUpdatedBy = lastUpdatedBy;
+            cidrsetting.LastUpdatedDate = lastUpdatedDate;
+            return cidrsetting;
         }
 
         #endregion
@@ -630,6 +630,30 @@ namespace IPDetectServer.Repositories
         private global::System.DateTime _LastUpdatedDate;
         partial void OnLastUpdatedDateChanging(global::System.DateTime value);
         partial void OnLastUpdatedDateChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String TTLExceptionKeys
+        {
+            get
+            {
+                return _TTLExceptionKeys;
+            }
+            set
+            {
+                OnTTLExceptionKeysChanging(value);
+                ReportPropertyChanging("TTLExceptionKeys");
+                _TTLExceptionKeys = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("TTLExceptionKeys");
+                OnTTLExceptionKeysChanged();
+            }
+        }
+        private global::System.String _TTLExceptionKeys;
+        partial void OnTTLExceptionKeysChanging(global::System.String value);
+        partial void OnTTLExceptionKeysChanged();
 
         #endregion
 

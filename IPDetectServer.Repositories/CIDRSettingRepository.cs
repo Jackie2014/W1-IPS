@@ -17,7 +17,7 @@ namespace IPDetectServer.Repositories
                 throw new MobileException("非法的CIDRSettingModel参数,model 不能为空.");
             }
             model.ID = Guid.NewGuid().ToString();
-            cidrsettings item = new cidrsettings
+            cidrsetting item = new cidrsetting
             {
                 ID = model.ID,
                 CreatedBy = model.CreatedBy,
@@ -30,7 +30,8 @@ namespace IPDetectServer.Repositories
                 IPEndNum = IPHelper.IPToNumber(model.IPEnd),
                 TCPPort = model.TCPPort,
                 TTLThreshold = model.TTLFaZhi,
-                TCPThreshold = model.TCPFaZhi
+                TCPThreshold = model.TCPFaZhi,
+                TTLExceptionKeys = model.TTLExceptionKeys
             };
 
             using (var dbContext = new DataEntities())
@@ -68,6 +69,7 @@ namespace IPDetectServer.Repositories
                     dbSetting.IPEndNum = IPHelper.IPToNumber(model.IPEnd);
                     dbSetting.TTLThreshold = model.TTLFaZhi;
                     dbSetting.TCPThreshold = model.TCPFaZhi;
+                    dbSetting.TTLExceptionKeys = model.TTLExceptionKeys;
                     dbContext.SaveChanges();
                 }
             }
@@ -90,7 +92,7 @@ namespace IPDetectServer.Repositories
         public List<CIDRSettingModel> GetSettings(int pageIndex, int pageSize)
         {
             List<CIDRSettingModel> result = new List<CIDRSettingModel>();
-            List<cidrsettings> dbSettings = new List<cidrsettings>();
+            List<cidrsetting> dbSettings = new List<cidrsetting>();
             using (var dbContext = new DataEntities())
             {
                 dbSettings = dbContext.cidrsettings
@@ -113,6 +115,7 @@ namespace IPDetectServer.Repositories
                 b.TCPFaZhi = c.TCPThreshold;
                 b.TCPPort = c.TCPPort;
                 b.TTLFaZhi = c.TTLThreshold;
+                b.TTLExceptionKeys = c.TTLExceptionKeys;
 
                 result.Add(b);
             }

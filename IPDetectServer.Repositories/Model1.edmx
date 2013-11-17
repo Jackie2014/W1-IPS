@@ -28,6 +28,7 @@
           <Property Name="TCPThreshold" Type="int" Nullable="false" />
           <Property Name="TCPPort" Type="int" Nullable="false" />
           <Property Name="TTLThreshold" Type="int" Nullable="false" />
+          <Property Name="TTLExceptionKeys" Type="varchar" MaxLength="200" />
           <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="LastUpdatedBy" Type="varchar" Nullable="false" MaxLength="50" />
@@ -175,7 +176,7 @@
           <EntitySet Name="Users" EntityType="IPDetectServer.Repositories.dbModels.User" />
           <EntitySet Name="ClientIPs" EntityType="IPDetectServer.Repositories.dbModels.ClientIP" />
           <EntitySet Name="ipscanresults" EntityType="IPDetectServer.Repositories.dbModels.ipscanresults" />
-          <EntitySet Name="cidrsettings" EntityType="IPDetectServer.Repositories.dbModels.cidrsettings" />
+          <EntitySet Name="cidrsettings" EntityType="IPDetectServer.Repositories.dbModels.cidrsetting" />
         </EntityContainer>
         <EntityType Name="IPEntity">
           <Key>
@@ -306,7 +307,7 @@
           <Property Type="DateTime" Name="LastUpdatedDate" Nullable="false" />
           <Property Type="String" Name="LastUpdatedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="cidrsettings">
+        <EntityType Name="cidrsetting">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -322,6 +323,7 @@
           <Property Type="DateTime" Name="CreatedDate" Nullable="false" />
           <Property Type="String" Name="LastUpdatedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="LastUpdatedDate" Nullable="false" />
+          <Property Type="String" Name="TTLExceptionKeys" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -467,8 +469,9 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="cidrsettings">
-            <EntityTypeMapping TypeName="IPDetectServer.Repositories.dbModels.cidrsettings">
+            <EntityTypeMapping TypeName="IPDetectServer.Repositories.dbModels.cidrsetting">
               <MappingFragment StoreEntitySet="cidrsettings">
+                <ScalarProperty Name="TTLExceptionKeys" ColumnName="TTLExceptionKeys" />
                 <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
                 <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -513,7 +516,7 @@
         <EntityTypeShape EntityType="IPDetectServer.Repositories.dbModels.User" Width="1.5" PointX="0.5" PointY="4.75" Height="3.8802294921874996" />
         <EntityTypeShape EntityType="IPDetectServer.Repositories.dbModels.ClientIP" Width="1.5" PointX="7.375" PointY="0.75" Height="4.6443082682291674" />
         <EntityTypeShape EntityType="IPDetectServer.Repositories.dbModels.ipscanresults" Width="1.5" PointX="9.375" PointY="0.75" Height="2.7341113281250031" />
-        <EntityTypeShape EntityType="IPDetectServer.Repositories.dbModels.cidrsettings" Width="1.5" PointX="7.375" PointY="6.75" Height="3.3071704101562531" />
+        <EntityTypeShape EntityType="IPDetectServer.Repositories.dbModels.cidrsetting" Width="1.5" PointX="7.375" PointY="6.75" Height="3.3071704101562531" />
       </Diagram>
     </Diagrams>
   </Designer>

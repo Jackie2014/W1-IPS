@@ -1,0 +1,70 @@
+﻿@model IPDetectServer.Web.Models.UserViewModel
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var strValidationSummary = string.Empty;
+    var validationSummary = Html.ValidationSummary("", new { @class = "nolist" });
+    if (validationSummary != null)
+    {
+        strValidationSummary = validationSummary.ToString();
+    }
+}
+
+@using (@Html.BeginForm())
+{
+    <ul>
+        <li class="content-title">&nbsp;&nbsp;新增用户</li>
+    </ul>
+     <div class="group-in-a-line-20">
+        <div class="same_line" style="width:9px;"></div>
+        <div class="same_line" style="width:800px;">@Html.Raw(strValidationSummary)</div>
+    </div>
+    <div class="group-in-a-line">
+        <div class="same_line" style="width:80px;">&nbsp;&nbsp;登录账号：</div>
+        <div class="same_line" style="width:160px;">@Html.TextBoxFor(m => m.LoginName, new { @maxlength = "50", style = "width:150px" })</div>
+        <div class="same_line" style="width:10px;color:Red">*</div>
+    </div>
+
+    <div class="group-in-a-line">
+        <div class="same_line" style="width:80px;">&nbsp;&nbsp;登录密码：</div>
+        <div class="same_line" style="width:160px;">@Html.PasswordFor(m => m.Password, new { @maxlength = "50", style = "width:150px" })</div>
+        <div class="same_line" style="width:10px;color:Red">*</div>
+    </div>
+    <div class="group-in-a-line">
+        <div class="same_line" style="width:80px;">&nbsp;&nbsp;确认密码：</div>
+        <div class="same_line" style="width:160px;">@Html.PasswordFor(m => m.PasswordConfirm, new { @maxlength = "50", style = "width:150px" })</div>
+        <div class="same_line" style="width:10px;color:Red">*</div>
+    </div>
+    <div class="group-in-a-line">
+        <div class="same_line" style="width:80px;">&nbsp;&nbsp;真实姓名：</div>
+        <div class="same_line" style="width:160px;">@Html.TextBoxFor(m => m.Name, new { @maxlength = "10", style = "width:150px" })</div>
+        <div class="same_line" style="width:10px;color:Red">*</div>
+    </div>
+    <div class="group-in-a-line">
+        <div class="same_line" style="width:80px;">&nbsp;&nbsp;城&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;市：</div>
+        <div class="same_line" style="width:160px;">@Html.TextBoxFor(m => m.City, new { @maxlength = "10", style = "width:150px" })</div>
+        <div class="same_line" style="width:10px;color:Red">*</div>
+    </div>
+    <div class="group-in-a-line">
+        <div class="same_line" style="width:80px;">&nbsp;&nbsp;联系电话：</div>
+        <div class="same_line" style="width:160px;">@Html.TextBoxFor(m => m.Phone, new { @maxlength = "50", style = "width:150px" })</div>
+    </div>
+    <div class="group-in-a-line">
+        <div class="same_line" style="width:80px;">&nbsp;&nbsp;备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</div>
+        <div class="same_line" style="width:160px;">@Html.TextBoxFor(m => m.Description, new { @maxlength = "500", style = "width:150px" })</div>
+    </div>
+    <div class="group-in-a-line">
+        <div class="same_line" style="width:80px;">&nbsp;&nbsp;账号类型：</div>
+        <div class="same_line" style="width:160px;">@Html.DropDownListFor(m => m.UserType, Model.GetUserTypes(), new { @class = "dropdownlist", style = "width:155px" })</div>
+        <div class="same_line" style="width:10px;color:Red">*</div>
+    </div> 
+@*    <div class="group-in-a-line_40">
+        <div class="same_line_40" style="width:40px;">&nbsp;</div>
+        <div class="same_line_40" style="width:80px;">&nbsp;&nbsp;<input type="submit" value="确认新增" name="btnAddUser" class="button" /></div>
+        <div class="same_line_40" style="width:20px;">&nbsp;</div>    
+        <div class="same_line_40" style="width:80px;">&nbsp;&nbsp;<input type="submit" value="重&nbsp;&nbsp;&nbsp;&nbsp;置" name="btnReset" class="button_reset" /></div>
+    </div> *@
+    <br />
+      <input type="submit" value="确认新增" name="btnAddUser" class="button" /> @Html.Raw("&nbsp;&nbsp;&nbsp;")
+      <input type="submit" value="重&nbsp;&nbsp;&nbsp;&nbsp;置" name="btnReset" class="button_reset" />
+}
