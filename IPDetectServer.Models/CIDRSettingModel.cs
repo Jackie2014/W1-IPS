@@ -51,6 +51,13 @@ namespace IPDetectServer.Models
             set;
         }
 
+        [DataMember(Name = "TTLExceptionKeys")]
+        public string TTLExceptionKeys
+        {
+            get;
+            set;
+        }
+
         public string CreatedBy
         {
             get;
