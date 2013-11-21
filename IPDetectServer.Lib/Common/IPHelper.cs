@@ -7,7 +7,7 @@ namespace IPDetectServer.Lib.Common
 {
     public static class IPHelper
     {
-        public static int IPToNumber(string strIPAddress)
+        public static long IPToNumber(string strIPAddress)
         {
             //将目标IP地址字符串strIPAddress转换为数字
             string[] arrayIP = strIPAddress.Split('.');

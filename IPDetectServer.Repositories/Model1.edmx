@@ -23,8 +23,8 @@
           <Property Name="ID" Type="varchar" Nullable="false" MaxLength="36" />
           <Property Name="IPStart" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="IPEnd" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="IPStartNum" Type="int" Nullable="false" />
-          <Property Name="IPEndNum" Type="int" Nullable="false" />
+          <Property Name="IPStartNum" Type="bigint" Nullable="false" />
+          <Property Name="IPEndNum" Type="bigint" Nullable="false" />
           <Property Name="TCPThreshold" Type="int" Nullable="false" />
           <Property Name="TCPPort" Type="int" Nullable="false" />
           <Property Name="TTLThreshold" Type="int" Nullable="false" />
@@ -314,16 +314,16 @@
           <Property Type="String" Name="ID" Nullable="false" MaxLength="36" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="IPStart" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="IPEnd" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="IPStartNum" Nullable="false" />
-          <Property Type="Int32" Name="IPEndNum" Nullable="false" />
+          <Property Type="Int64" Name="IPStartNum" Nullable="false" />
+          <Property Type="Int64" Name="IPEndNum" Nullable="false" />
           <Property Type="Int32" Name="TCPThreshold" Nullable="false" />
           <Property Type="Int32" Name="TCPPort" Nullable="false" />
           <Property Type="Int32" Name="TTLThreshold" Nullable="false" />
+          <Property Type="String" Name="TTLExceptionKeys" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="CreatedDate" Nullable="false" />
           <Property Type="String" Name="LastUpdatedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="LastUpdatedDate" Nullable="false" />
-          <Property Type="String" Name="TTLExceptionKeys" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -471,11 +471,11 @@
           <EntitySetMapping Name="cidrsettings">
             <EntityTypeMapping TypeName="IPDetectServer.Repositories.dbModels.cidrsetting">
               <MappingFragment StoreEntitySet="cidrsettings">
-                <ScalarProperty Name="TTLExceptionKeys" ColumnName="TTLExceptionKeys" />
                 <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
                 <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="TTLExceptionKeys" ColumnName="TTLExceptionKeys" />
                 <ScalarProperty Name="TTLThreshold" ColumnName="TTLThreshold" />
                 <ScalarProperty Name="TCPPort" ColumnName="TCPPort" />
                 <ScalarProperty Name="TCPThreshold" ColumnName="TCPThreshold" />
@@ -516,7 +516,7 @@
         <EntityTypeShape EntityType="IPDetectServer.Repositories.dbModels.User" Width="1.5" PointX="0.5" PointY="4.75" Height="3.8802294921874996" />
         <EntityTypeShape EntityType="IPDetectServer.Repositories.dbModels.ClientIP" Width="1.5" PointX="7.375" PointY="0.75" Height="4.6443082682291674" />
         <EntityTypeShape EntityType="IPDetectServer.Repositories.dbModels.ipscanresults" Width="1.5" PointX="9.375" PointY="0.75" Height="2.7341113281250031" />
-        <EntityTypeShape EntityType="IPDetectServer.Repositories.dbModels.cidrsetting" Width="1.5" PointX="7.375" PointY="6.75" Height="3.3071704101562531" />
+        <EntityTypeShape EntityType="IPDetectServer.Repositories.dbModels.cidrsetting" Width="1.5" PointX="7.375" PointY="6.75" Height="3.4981901041666674" />
       </Diagram>
     </Diagrams>
   </Designer>

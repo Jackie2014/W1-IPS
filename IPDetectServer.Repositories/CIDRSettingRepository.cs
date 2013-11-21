@@ -116,7 +116,8 @@ namespace IPDetectServer.Repositories
                 b.TCPPort = c.TCPPort;
                 b.TTLFaZhi = c.TTLThreshold;
                 b.TTLExceptionKeys = c.TTLExceptionKeys;
-
+                b.IPStartNum = c.IPStartNum;
+                b.IPEndNum = c.IPEndNum;
                 result.Add(b);
             }
             

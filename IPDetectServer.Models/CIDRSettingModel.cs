@@ -30,6 +30,20 @@ namespace IPDetectServer.Models
             set;
         }
 
+        [DataMember(Name = "IPStartNum")]
+        public long IPStartNum
+        {
+            get;
+            set;
+        }
+
+        [DataMember(Name = "IPEndNum")]
+        public long IPEndNum
+        {
+            get;
+            set;
+        }
+
         [DataMember(Name = "TCPPort")]
         public int TCPPort
         {

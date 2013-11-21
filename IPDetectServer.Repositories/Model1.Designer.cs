@@ -318,7 +318,7 @@ namespace IPDetectServer.Repositories
         /// <param name="createdDate">CreatedDate 属性的初始值。</param>
         /// <param name="lastUpdatedBy">LastUpdatedBy 属性的初始值。</param>
         /// <param name="lastUpdatedDate">LastUpdatedDate 属性的初始值。</param>
-        public static cidrsetting Createcidrsetting(global::System.String id, global::System.String iPStart, global::System.String iPEnd, global::System.Int32 iPStartNum, global::System.Int32 iPEndNum, global::System.Int32 tCPThreshold, global::System.Int32 tCPPort, global::System.Int32 tTLThreshold, global::System.String createdBy, global::System.DateTime createdDate, global::System.String lastUpdatedBy, global::System.DateTime lastUpdatedDate)
+        public static cidrsetting Createcidrsetting(global::System.String id, global::System.String iPStart, global::System.String iPEnd, global::System.Int64 iPStartNum, global::System.Int64 iPEndNum, global::System.Int32 tCPThreshold, global::System.Int32 tCPPort, global::System.Int32 tTLThreshold, global::System.String createdBy, global::System.DateTime createdDate, global::System.String lastUpdatedBy, global::System.DateTime lastUpdatedDate)
         {
             cidrsetting cidrsetting = new cidrsetting();
             cidrsetting.ID = id;
@@ -420,7 +420,7 @@ namespace IPDetectServer.Repositories
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 IPStartNum
+        public global::System.Int64 IPStartNum
         {
             get
             {
@@ -435,8 +435,8 @@ namespace IPDetectServer.Repositories
                 OnIPStartNumChanged();
             }
         }
-        private global::System.Int32 _IPStartNum;
-        partial void OnIPStartNumChanging(global::System.Int32 value);
+        private global::System.Int64 _IPStartNum;
+        partial void OnIPStartNumChanging(global::System.Int64 value);
         partial void OnIPStartNumChanged();
     
         /// <summary>
@@ -444,7 +444,7 @@ namespace IPDetectServer.Repositories
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 IPEndNum
+        public global::System.Int64 IPEndNum
         {
             get
             {
@@ -459,8 +459,8 @@ namespace IPDetectServer.Repositories
                 OnIPEndNumChanged();
             }
         }
-        private global::System.Int32 _IPEndNum;
-        partial void OnIPEndNumChanging(global::System.Int32 value);
+        private global::System.Int64 _IPEndNum;
+        partial void OnIPEndNumChanging(global::System.Int64 value);
         partial void OnIPEndNumChanged();
     
         /// <summary>
@@ -534,6 +534,30 @@ namespace IPDetectServer.Repositories
         private global::System.Int32 _TTLThreshold;
         partial void OnTTLThresholdChanging(global::System.Int32 value);
         partial void OnTTLThresholdChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String TTLExceptionKeys
+        {
+            get
+            {
+                return _TTLExceptionKeys;
+            }
+            set
+            {
+                OnTTLExceptionKeysChanging(value);
+                ReportPropertyChanging("TTLExceptionKeys");
+                _TTLExceptionKeys = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("TTLExceptionKeys");
+                OnTTLExceptionKeysChanged();
+            }
+        }
+        private global::System.String _TTLExceptionKeys;
+        partial void OnTTLExceptionKeysChanging(global::System.String value);
+        partial void OnTTLExceptionKeysChanged();
     
         /// <summary>
         /// 没有元数据文档可用。
@@ -630,30 +654,6 @@ namespace IPDetectServer.Repositories
         private global::System.DateTime _LastUpdatedDate;
         partial void OnLastUpdatedDateChanging(global::System.DateTime value);
         partial void OnLastUpdatedDateChanged();
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String TTLExceptionKeys
-        {
-            get
-            {
-                return _TTLExceptionKeys;
-            }
-            set
-            {
-                OnTTLExceptionKeysChanging(value);
-                ReportPropertyChanging("TTLExceptionKeys");
-                _TTLExceptionKeys = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("TTLExceptionKeys");
-                OnTTLExceptionKeysChanged();
-            }
-        }
-        private global::System.String _TTLExceptionKeys;
-        partial void OnTTLExceptionKeysChanging(global::System.String value);
-        partial void OnTTLExceptionKeysChanged();
 
         #endregion
 
